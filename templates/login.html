@@ -5,177 +5,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AAC System | Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        .login-split-container {
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #FFF9F0;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        @media (min-width: 768px) {
-            .login-split-container {
-                flex-direction: row;
-                align-items: stretch;
-            }
-        }
-
-        .login-card {
-            flex: 1;
-            background: white;
-            padding: 2.5rem 2rem;
-            border-radius: 24px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            border: 4px solid transparent;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .login-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
-
-        .user-card {
-            border-color: var(--primary);
-            background: linear-gradient(to bottom, #ffffff, #f0fdf4);
-        }
-        
-        .caregiver-card {
-            border-color: var(--secondary);
-            background: linear-gradient(to bottom, #ffffff, #fdf4ff);
-        }
-
-        /* Large icon header for cards */
-        .card-icon {
-            font-size: 4rem;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .card-title {
-            text-align: center;
-            font-family: 'Comic Neue', cursive;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .user-card .card-title { color: var(--primary); }
-        .caregiver-card .card-title { color: var(--secondary); }
-
-        .card-subtitle {
-            text-align: center;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        .login-hints {
-            margin-top: auto;
-            padding-top: 1.5rem;
-            border-top: 2px dashed #e2e8f0;
-            text-align: center;
-            font-size: 0.95rem;
-            color: var(--text-light);
-        }
-        
-        .role-btn {
-            width: 100%;
-            padding: 1.2rem;
-            font-size: 1.2rem;
-            border-radius: 16px;
-            margin-top: 1rem;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 16px;
+            margin: 0;
         }
     </style>
+        <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/favicon.svg') }}?v=3">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.svg') }}?v=3">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 </head>
 
-<body class="login-body" style="background: linear-gradient(135deg, #e0f2fe 0%, #ede9fe 100%); min-height: 100vh; display: flex; flex-direction: column;">
-
-    <div style="text-align: center; margin-top: 3rem; margin-bottom: 1rem;">
-        <div style="font-size: 4rem; margin-bottom: 1rem; animation: bounce 2s infinite;">🌟</div>
-        <h1 style="font-family: 'Comic Neue', cursive; font-size: 3rem; color: #334155; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">AAC App</h1>
-        <p style="color: #64748b; font-size: 1.2rem;">Choose your portal to login!</p>
+<body>
+    <div style="text-align:center; margin-bottom:28px;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 80" width="200" height="73" style="display:inline-block;">
+        <!-- Speech bubble body -->
+        <rect x="0" y="4" width="68" height="56" rx="18" ry="18" fill="#FF6B6B"/>
+        <!-- Speech bubble tail -->
+        <polygon points="14,60 34,60 20,74" fill="#FF6B6B"/>
+        <!-- Malayalam letter -->
+        <text x="34" y="42" font-family="serif" font-size="30" font-weight="700" fill="white" text-anchor="middle">ആ</text>
+        <!-- AAC wordmark -->
+        <text x="84" y="42" font-family="Arial Black, sans-serif" font-size="34" font-weight="900" fill="#2D3436" text-anchor="start">AAC</text>
+        <!-- Malayalam subtitle -->
+        <text x="86" y="60" font-family="serif" font-size="14" font-weight="700" fill="#4ECDC4" text-anchor="start">മലയാളം</text>
+      </svg>
+      <p style="font-size:14px; color:#888; font-weight:600; margin:8px 0 0;">Choose your portal to login!</p>
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <div class="flash-messages" style="max-width: 600px; margin: 0 auto; width: 100%; padding: 0 1rem;">
+      {% if messages %}
         {% for category, message in messages %}
-        <div class="flash-alert flash-{{ category }}">{{ message }}</div>
+          <div style="background:#F0FFFD; border:2px solid #4ECDC4; border-radius:16px; padding:10px 18px; font-size:13px; font-weight:700; color:#0F6E56; text-align:center; margin-bottom:16px; max-width:400px; width:100%;">
+            {{ message }}
+          </div>
         {% endfor %}
-    </div>
-    {% endif %}
+      {% endif %}
     {% endwith %}
 
-    <div class="login-split-container">
-        
-        <!-- User (Child) Login Card -->
-        <div class="login-card user-card">
-            <div class="card-icon">🧒</div>
-            <h2 class="card-title">User Login</h2>
+    <div id="login-card" style="background:white; border-radius:32px; width:100%; max-width:400px; overflow:hidden; border:2.5px solid #FF6B6B;">
 
-            <form action="/" method="POST" class="login-form">
-                <input type="hidden" name="login_type" value="user">
-                
-                <div class="form-group">
-                    <label for="user_username" style="color: var(--primary);">👤 Username:</label>
-                    <input type="text" id="user_username" name="username" class="form-control" placeholder="Enter username..." required style="border-width: 2px; border-color: #bbf7d0;">
-                </div>
-
-                <div class="form-group">
-                    <label for="user_password" style="color: var(--primary);">🔑 Password:</label>
-                    <input type="password" id="user_password" name="password" class="form-control" placeholder="Enter password..." required style="border-width: 2px; border-color: #bbf7d0;">
-                </div>
-
-                <button type="submit" class="btn btn-primary role-btn">Let's Go! 🚀</button>
-            </form>
-
-            <div class="login-hints">
-                <p>Child Demo: <strong>child1 / 123</strong></p>
-                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
-                    <a href="{{ url_for('register') }}" style="color: var(--primary); font-weight: bold; text-decoration: none;">✨ Create new user account</a>
-                </div>
-            </div>
+      <div style="display:flex;">
+        <div id="tab-user" onclick="switchTab('user')"
+          style="flex:1; padding:16px; text-align:center; font-size:15px; font-weight:800; cursor:pointer; border-bottom:3px solid #FF6B6B; background:#FFF5F5; color:#FF6B6B;">
+          <span style="font-size:22px; display:block; margin-bottom:4px;">👦</span>
+          User Login
         </div>
-
-        <!-- Caregiver (Admin) Login Card -->
-        <div class="login-card caregiver-card">
-            <div class="card-icon">👩‍🏫</div>
-            <h2 class="card-title">Caregiver Login</h2>
-            <p class="card-subtitle">Manage content & settings</p>
-
-            <form action="/" method="POST" class="login-form">
-                <input type="hidden" name="login_type" value="caregiver">
-                
-                <div class="form-group">
-                    <label for="caregiver_username" style="color: var(--secondary);">📧 Username:</label>
-                    <input type="text" id="caregiver_username" name="username" class="form-control" placeholder="Enter username..." required style="border-width: 2px; border-color: #fbcfe8;">
-                </div>
-
-                <div class="form-group">
-                    <label for="caregiver_password" style="color: var(--secondary);">🔒 Password:</label>
-                    <input type="password" id="caregiver_password" name="password" class="form-control" placeholder="Enter password..." required style="border-width: 2px; border-color: #fbcfe8;">
-                </div>
-
-                <button type="submit" class="btn btn-secondary role-btn" style="background: var(--secondary);">Login</button>
-            </form>
-
-            <div class="login-hints">
-                <p>Caregiver Demo: <strong>admin1 / admin</strong></p>
-                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
-                    <a href="{{ url_for('register') }}" style="color: var(--secondary); font-weight: bold; text-decoration: none;">✨ Create new caregiver account</a>
-                </div>
-            </div>
+        <div id="tab-care" onclick="switchTab('care')"
+          style="flex:1; padding:16px; text-align:center; font-size:15px; font-weight:800; cursor:pointer; border-bottom:3px solid transparent; background:#fafafa; color:#aaa;">
+          <span style="font-size:22px; display:block; margin-bottom:4px;">👩‍🏫</span>
+          Caregiver Login
         </div>
+      </div>
+
+      <div id="panel-user" style="display:block;">
+        <div style="padding:28px 28px 24px;">
+          <h2 style="font-size:20px; font-weight:900; color:#FF6B6B; margin:0 0 4px;">Welcome back! 👋</h2>
+          <p style="font-size:13px; color:#888; font-weight:600; margin:0 0 20px;">Login to your account</p>
+          <form method="POST" action="/">
+            <input type="hidden" name="login_type" value="user">
+            <div style="margin-bottom:14px;">
+              <label style="font-size:12px; font-weight:800; color:#FF6B6B; display:block; margin-bottom:6px;">👤 Username</label>
+              <input type="text" name="username" placeholder="Enter username..."
+                style="width:100%; padding:12px 16px; border-radius:50px; border:2px solid #eee; font-size:14px; font-family:'Nunito',sans-serif; outline:none;">
+            </div>
+            <div style="margin-bottom:14px;">
+              <label style="font-size:12px; font-weight:800; color:#FF6B6B; display:block; margin-bottom:6px;">🔑 Password</label>
+              <input type="password" name="password" placeholder="Enter password..."
+                style="width:100%; padding:12px 16px; border-radius:50px; border:2px solid #eee; font-size:14px; font-family:'Nunito',sans-serif; outline:none;">
+            </div>
+            <button type="submit"
+              style="width:100%; padding:14px; background:#FF6B6B; color:white; border:none; border-radius:50px; font-size:16px; font-weight:900; cursor:pointer; font-family:'Nunito',sans-serif;">
+              Let's Go! ✨
+            </button>
+          </form>
+          <p style="text-align:center; font-size:12px; color:#aaa; font-weight:600; margin-top:14px;">Child Demo: child1 / 123</p>
+          <div style="text-align:center; margin-top:10px;">
+            <a href="{{ url_for('register') }}" style="font-size:13px; font-weight:700; color:#FF6B6B; text-decoration:none;">✨ Create new user account</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-care" style="display:none;">
+        <div style="padding:28px 28px 24px;">
+          <h2 style="font-size:20px; font-weight:900; color:#4ECDC4; margin:0 0 4px;">Caregiver Portal 🎓</h2>
+          <p style="font-size:13px; color:#888; font-weight:600; margin:0 0 20px;">Manage content &amp; settings</p>
+          <form method="POST" action="/">
+            <input type="hidden" name="login_type" value="caregiver">
+            <div style="margin-bottom:14px;">
+              <label style="font-size:12px; font-weight:800; color:#4ECDC4; display:block; margin-bottom:6px;">👤 Username</label>
+              <input type="text" name="username" placeholder="Enter username..."
+                style="width:100%; padding:12px 16px; border-radius:50px; border:2px solid #eee; font-size:14px; font-family:'Nunito',sans-serif; outline:none;">
+            </div>
+            <div style="margin-bottom:14px;">
+              <label style="font-size:12px; font-weight:800; color:#4ECDC4; display:block; margin-bottom:6px;">🔒 Password</label>
+              <input type="password" name="password" placeholder="Enter password..."
+                style="width:100%; padding:12px 16px; border-radius:50px; border:2px solid #eee; font-size:14px; font-family:'Nunito',sans-serif; outline:none;">
+            </div>
+            <button type="submit"
+              style="width:100%; padding:14px; background:#4ECDC4; color:white; border:none; border-radius:50px; font-size:16px; font-weight:900; cursor:pointer; font-family:'Nunito',sans-serif;">
+              Login →
+            </button>
+          </form>
+          <p style="text-align:center; font-size:12px; color:#aaa; font-weight:600; margin-top:14px;">Caregiver Demo: admin1 / admin</p>
+          <div style="text-align:center; margin-top:10px;">
+            <a href="{{ url_for('register') }}" style="font-size:13px; font-weight:700; color:#4ECDC4; text-decoration:none;">✨ Create new caregiver account</a>
+          </div>
+        </div>
+      </div>
 
     </div>
 
+    <script>
+    function switchTab(tab) {
+      var card = document.getElementById('login-card');
+      var tu = document.getElementById('tab-user');
+      var tc = document.getElementById('tab-care');
+      var pu = document.getElementById('panel-user');
+      var pc = document.getElementById('panel-care');
+      if (tab === 'user') {
+        tu.style.cssText = 'flex:1;padding:16px;text-align:center;font-size:15px;font-weight:800;cursor:pointer;border-bottom:3px solid #FF6B6B;background:#FFF5F5;color:#FF6B6B;';
+        tc.style.cssText = 'flex:1;padding:16px;text-align:center;font-size:15px;font-weight:800;cursor:pointer;border-bottom:3px solid transparent;background:#fafafa;color:#aaa;';
+        pu.style.display = 'block';
+        pc.style.display = 'none';
+        card.style.borderColor = '#FF6B6B';
+      } else {
+        tu.style.cssText = 'flex:1;padding:16px;text-align:center;font-size:15px;font-weight:800;cursor:pointer;border-bottom:3px solid transparent;background:#fafafa;color:#aaa;';
+        tc.style.cssText = 'flex:1;padding:16px;text-align:center;font-size:15px;font-weight:800;cursor:pointer;border-bottom:3px solid #4ECDC4;background:#F0FFFD;color:#4ECDC4;';
+        pu.style.display = 'none';
+        pc.style.display = 'block';
+        card.style.borderColor = '#4ECDC4';
+      }
+    }
+    </script>
 </body>
 </html>

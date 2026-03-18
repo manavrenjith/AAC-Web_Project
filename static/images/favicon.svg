@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Speech bubble body -->
+  <rect x="4" y="2" width="56" height="46" rx="14" ry="14" fill="#FF6B6B"/>
+  <!-- Speech bubble tail -->
+  <polygon points="10,48 28,48 14,62" fill="#FF6B6B"/>
+  <!-- Malayalam letter ആ -->
+  <text x="32" y="36" font-family="serif" font-size="28" font-weight="700" fill="white" text-anchor="middle">ആ</text>
+</svg>

@@ -6,25 +6,19 @@
 
 {% block content %}
 <main class="aac-main">
-    <div class="user-header">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-            <h2>Text to Speech Converter</h2>
-            <a href="{{ url_for('user_home') }}" class="btn btn-clear hover-bounce">🏠 ഹോം (Home)</a>
+    <section class="large-card-section">
+        <div class="large-emoji">🔊</div>
+        <h1 style="font-size:1.8rem; font-weight:900; color:var(--text); margin-bottom:20px;">Text to Speech</h1>
+        <div class="tts-input-group">
+            <label for="ttsInput" style="display:block; margin-bottom:8px; font-weight:700;">Enter Text:</label>
+            <textarea id="ttsInput" class="large-textarea" placeholder="എനിക്ക് വെള്ളം വേണം" autofocus></textarea>
         </div>
-    </div>
-
-    <!-- Text to Speech Section -->
-    <section class="features-section tts-section" id="tts-section" style="margin-top: 3rem;">
-        <div class="tts-card" style="margin-bottom: 2rem;">
-            <div class="tts-input-group">
-                <label for="ttsInput">Enter Text:</label>
-                <input type="text" id="ttsInput" class="form-control" placeholder="എനിക്ക് വെള്ളം വേണം" autofocus>
-            </div>
-            <div class="tts-buttons" style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center;">
-                <button class="btn btn-speak" onclick="speakTTSConverterText()">🔊 Speak</button>
-                <button class="btn btn-clear" onclick="clearTTSConverterText()">Clear</button>
-            </div>
+        <div style="margin-top:1.5rem; display:flex; gap:1rem; justify-content:center;">
+            <button class="btn btn-primary" onclick="speakTTSConverterText()">🔊 Speak</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('ttsInput').value = ''">Clear</button>
         </div>
+    </section>
+</main>
 
         <!-- The Digital Keyboard (Malayalam) -->
         <h3 style="font-family: 'Comic Neue', cursive; text-align: center; margin-bottom: 1rem;">Malayalam Keyboard</h3>

@@ -226,41 +226,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Category Filtering Logic
 window.filterCategory = function(category) {
-    // Reveal grid if hidden by default
-    const wordGrid = document.getElementById('word-grid');
-    if (wordGrid) {
-        wordGrid.style.display = 'grid';
-    }
-
-    const cards = document.querySelectorAll('.word-card');
-    cards.forEach(card => {
-        if (category === 'all' || card.getAttribute('data-category') === category) {
+    document.querySelectorAll('[onclick^="filterCategory"]').forEach(function(btn) {
+        btn.classList.remove('comm-pill-active');
+    });
+    event.currentTarget.classList.add('comm-pill-active');
+    var cards = document.querySelectorAll('.word-card');
+    cards.forEach(function(card) {
+        if (category === 'all' || card.dataset.category === category) {
             card.style.display = 'flex';
         } else {
             card.style.display = 'none';
         }
     });
-
-    // Close dropdown instantly when clicked
-    const dropdownMenu = document.querySelector('.dropdown-menu');
-    if(dropdownMenu) {
-        dropdownMenu.style.display = 'none';
-        setTimeout(() => dropdownMenu.style.display = '', 100);
-    }
-    
-    // Switch to Grid view automatically if not already
-    const toggleGridBtn = document.getElementById('toggle-grid-btn');
-    if (toggleGridBtn) {
-        toggleGridBtn.click();
-    }
-    
-    // Close the sidebar menu if it's open
-    const sidebarNav = document.getElementById('sidebar-nav');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
-    if (sidebarNav && sidebarNav.classList.contains('active')) {
-        sidebarNav.classList.remove('active');
-        if (sidebarOverlay) sidebarOverlay.classList.remove('active');
-    }
 };
 
 // Hamburger Sidebar Menu Logic

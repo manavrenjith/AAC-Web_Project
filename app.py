@@ -1,9 +1,18 @@
-from flask import Flask, render_template, request, redirect, session, url_for, flash, Response
+from flask import Flask, render_template, request, redirect, session, url_for, flash, Response, jsonify, send_from_directory
 import os
 import json
 import uuid
 import urllib.request
 import urllib.parse
+import torch
+from PIL import Image
+from gtts import gTTS
+from transformers import (
+    BlipForConditionalGeneration,
+    BlipProcessor,
+    MBartForConditionalGeneration,
+    MBart50TokenizerFast,
+)
 from werkzeug.utils import secure_filename
 from typing import Dict, Any, List, TypedDict, cast
 
@@ -50,6 +59,71 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(CUSTOM_UPLOAD_FOLDER, exist_ok=True)
 
+AUDIO_FOLDER = os.path.join('static', 'audio')
+AUDIO_OUTPUT_NAME = 'malayalam_output.mp3'
+os.makedirs(AUDIO_FOLDER, exist_ok=True)
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(
+        os.path.join(app.root_path, 'static', 'images'),
+        'favicon.svg',
+        mimetype='image/svg+xml'
+    )
+
+_blip_processor = None
+_blip_model = None
+_translation_model = None
+_translation_tokenizer = None
+
+
+def _get_blip_components():
+    global _blip_processor, _blip_model
+    if _blip_processor is None or _blip_model is None:
+        _blip_processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
+        _blip_model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
+    return _blip_processor, _blip_model
+
+
+def get_translation_model():
+    global _translation_model, _translation_tokenizer
+    if _translation_model is None:
+        _translation_tokenizer = MBart50TokenizerFast.from_pretrained(
+            "facebook/mbart-large-50-many-to-many-mmt"
+        )
+        _translation_model = MBartForConditionalGeneration.from_pretrained(
+            "facebook/mbart-large-50-many-to-many-mmt"
+        )
+    return _translation_model, _translation_tokenizer
+
+
+def _caption_image_with_blip(image_obj: Image.Image) -> str:
+    processor, model = _get_blip_components()
+    inputs = processor(images=image_obj, return_tensors="pt")
+    with torch.no_grad():
+        output_ids = model.generate(**inputs, max_new_tokens=40)
+    caption = processor.decode(output_ids[0], skip_special_tokens=True)
+    return caption.strip()
+
+
+def translate_to_malayalam(english_text: str) -> str:
+    model, tokenizer = get_translation_model()
+    tokenizer.src_lang = "en_XX"
+    encoded = tokenizer(english_text, return_tensors="pt")
+    generated_tokens = model.generate(
+        **encoded,
+        forced_bos_token_id=tokenizer.lang_code_to_id["ml_IN"]
+    )
+    return tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)[0]
+
+
+def _synthesize_malayalam_audio(malayalam_text: str) -> str:
+    output_path = os.path.join(AUDIO_FOLDER, AUDIO_OUTPUT_NAME)
+    tts = gTTS(text=malayalam_text, lang='ml')
+    tts.save(output_path)
+    return "/static/audio/" + AUDIO_OUTPUT_NAME
+
 def load_data() -> AppData:
     if not os.path.exists(DATA_FILE):
         return {"users": {}, "icons": [], "categories": []}
@@ -73,6 +147,15 @@ def save_data(data: AppData) -> None:
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def preload_models():
+    print("Preloading models...")
+    _caption_image_with_blip(Image.new("RGB", (1, 1), color="white"))
+    get_translation_model()
+    print("Models ready.")
+
+preload_models()
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -206,6 +289,44 @@ def speech_to_text():
         flash("ഈ പേജ് ആക്സസ് ചെയ്യാൻ ഒരു ഉപയോക്താവായി ലോഗിൻ ചെയ്യുക. (Please log in as a User to access this page.)", "error")
         return redirect(url_for("login"))
     return render_template("stt.html", name=session.get("name", "User"))
+
+
+@app.route("/image_to_speech")
+def image_to_speech():
+    if "user" not in session or session.get("role") not in ["user", "caregiver"]:
+        flash("Please log in as a User or Caregiver to access this page.", "error")
+        return redirect(url_for("login"))
+    return render_template("image_to_speech.html", name=session.get("name", "User"))
+
+
+@app.route("/image_to_speech/process", methods=["POST"])
+def image_to_speech_process():
+    if "user" not in session or session.get("role") not in ["user", "caregiver"]:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    image_file = request.files.get("image")
+    english_text = request.form.get("english_text", "").strip()
+
+    try:
+        if image_file and image_file.filename:
+            image_obj = Image.open(image_file.stream).convert("RGB")
+            english_source_text = _caption_image_with_blip(image_obj)
+        elif english_text:
+            english_source_text = english_text
+        else:
+            return jsonify({"error": "Provide either an image file or text input."}), 400
+
+        malayalam_text = translate_to_malayalam(english_source_text)
+        if not malayalam_text:
+            return jsonify({"error": "Translation failed."}), 500
+
+        audio_url = _synthesize_malayalam_audio(malayalam_text)
+        return jsonify({
+            "malayalam_text": malayalam_text,
+            "audio_url": audio_url,
+        })
+    except Exception as e:
+        return jsonify({"error": f"Processing failed: {str(e)}"}), 500
 
 @app.route("/categories")
 def categories():

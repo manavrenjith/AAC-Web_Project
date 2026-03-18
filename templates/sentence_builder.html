@@ -16,16 +16,16 @@
         </div>
 
         <!-- Sentence Builder Strip -->
-        <div class="speech-bar-container" style="background: #e0f2fe; border: 4px dashed #38bdf8;">
-            <div class="speech-bar" id="speech-bar" style="min-height: 100px;">
-                <!-- Words appear here like magic -->
+        <div style="margin-bottom: 2rem;" id="speech-bar-container">
+            <div class="sentence-display" id="speech-bar">
+                <!-- Words appear here -->
             </div>
-            <div class="speech-controls">
-                <button id="speak-btn" class="btn btn-speak action-btn pulse-hover" style="background: #3b82f6;">
-                    <span class="icon">🔊</span> Speak Sentence
+            <div class="speech-controls" style="margin-top: 1rem; display: flex; gap: 1rem; justify-content: center;">
+                <button id="speak-btn" class="btn btn-success btn-block" style="max-width: 300px;">
+                    <span>🔊</span> Speak Sentence
                 </button>
-                <button id="clear-btn" class="btn btn-clear action-btn hover-bounce">
-                    <span class="icon">✖️</span> Clear Sentence
+                <button id="clear-btn" class="btn btn-secondary btn-block" style="max-width: 200px;">
+                    <span>✖️</span> Clear
                 </button>
             </div>
         </div>

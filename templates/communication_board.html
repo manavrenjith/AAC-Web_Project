@@ -7,85 +7,95 @@
 {% block content %}
 <main class="aac-main">
 
-    <!-- Header Controls -->
-    <section class="board-header-section"
-        style="padding: 2rem; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #cbd5e1; margin-bottom: 2rem;">
-        <div>
-            <a href="{{ url_for('home') }}" class="btn btn-secondary" style="margin-right: 1rem;">⬅️ Back to Home</a>
-            <h1
-                style="display: inline-block; font-family: 'Comic Neue', cursive; color: var(--text-main); margin: 0; font-size: 2rem; vertical-align: middle;">
-                Communication Board</h1>
+        <div style="background:#FFF9F0; padding:20px 24px; border-bottom:2px dashed #FFE66D; margin-bottom:24px;">
+
+            <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+                <a href="{{ url_for('user_home') }}"
+                    style="display:inline-flex; align-items:center; gap:8px; background:#4ECDC4; color:white; border-radius:50px; padding:10px 20px; font-size:14px; font-weight:800; text-decoration:none; font-family:'Nunito',sans-serif; white-space:nowrap;">
+                    ← Back to Home
+                </a>
+                <h1 style="font-size:26px; font-weight:900; color:#2D3436; margin:0;">Communication Board</h1>
+            </div>
+
+            <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+
+                <button onclick="filterCategory('all')"
+                    style="display:inline-flex; align-items:center; gap:6px; padding:9px 18px; border-radius:50px; font-size:13px; font-weight:800; cursor:pointer; border:3px solid transparent; background:#FF6B6B; color:white; font-family:'Nunito',sans-serif;">
+                    🌈 All Categories
+                </button>
+
+                {% set pill_colors = ['#FF9F43','#4ECDC4','#FFE66D','#A855F7','#22C55E','#3B82F6','#EC4899','#F43F5E','#06B6D4'] %}
+                {% set text_colors = ['white','white','#7d6800','white','white','white','white','white','white'] %}
+                {% for category in categories %}
+                {% set pill_idx = loop.index0 % 9 %}
+                <button onclick="filterCategory('{{ category.name }}')" class="comm-pill comm-pill-{{ pill_idx }}"
+                    style="display:inline-flex; align-items:center; gap:6px; padding:9px 18px; border-radius:50px; font-size:13px; font-weight:800; cursor:pointer; border:3px solid transparent; font-family:'Nunito',sans-serif;">
+                    📁 {{ category.name }}
+                </button>
+                {% endfor %}
+
+            </div>
         </div>
-        <div class="category-buttons" style="margin-bottom: 0;">
-            <button class="btn btn-category all hover-bounce" onclick="filterCategory('all')">🌈 All Categories</button>
-            {% for category in categories %}
-            <button class="btn btn-category hover-bounce" onclick="filterCategory('{{ category.name }}')">📁 {{
-                category.name }}</button>
-            {% endfor %}
-        </div>
-    </section>
 
     <!-- Communication Board (Preview Grid) -->
     <section class="symbol-grid-section" id="preview-grid">
-        <div class="grid" id="word-grid">
+        <div class="board-grid" id="word-grid">
 
             <!-- Emotions -->
             <div class="word-card emotions hover-bounce" data-word="സന്തോഷം" data-category="emotions">
-                <div class="card-image-container"><span class="card-emoji">😊</span></div>
-                <div class="card-text">സന്തോഷം</div>
+                <span class="word-emoji">😊</span>
+                <div class="word-label">സന്തോഷം</div>
             </div>
             <div class="word-card emotions hover-bounce" data-word="സങ്കടം" data-category="emotions">
-                <div class="card-image-container"><span class="card-emoji">😢</span></div>
-                <div class="card-text">സങ്കടം</div>
+                <span class="word-emoji">😢</span>
+                <div class="word-label">സങ്കടം</div>
             </div>
             <div class="word-card emotions hover-bounce" data-word="ദേഷ്യം" data-category="emotions">
-                <div class="card-image-container"><span class="card-emoji">😠</span></div>
-                <div class="card-text">ദേഷ്യം</div>
+                <span class="word-emoji">😠</span>
+                <div class="word-label">ദേഷ്യം</div>
             </div>
             <div class="word-card emotions hover-bounce" data-word="പേടി" data-category="emotions">
-                <div class="card-image-container"><span class="card-emoji">😨</span></div>
-                <div class="card-text">പേടി</div>
+                <span class="word-emoji">😨</span>
+                <div class="word-label">പേടി</div>
             </div>
             <div class="word-card emotions hover-bounce" data-word="ആവേശം" data-category="emotions">
-                <div class="card-image-container"><span class="card-emoji">🤩</span></div>
-                <div class="card-text">ആവേശം</div>
+                <span class="word-emoji">🤩</span>
+                <div class="word-label">ആവേശം</div>
             </div>
 
             <!-- Daily Needs -->
             <div class="word-card daily_needs hover-bounce" data-word="വെള്ളം" data-category="daily_needs">
-                <div class="card-image-container"><span class="card-emoji">💧</span></div>
-                <div class="card-text">വെള്ളം</div>
+                <span class="word-emoji">💧</span>
+                <div class="word-label">വെള്ളം</div>
             </div>
             <div class="word-card daily_needs hover-bounce" data-word="ഭക്ഷണം" data-category="daily_needs">
-                <div class="card-image-container"><span class="card-emoji">🥪</span></div>
-                <div class="card-text">ഭക്ഷണം</div>
+                <span class="word-emoji">🥪</span>
+                <div class="word-label">ഭക്ഷണം</div>
             </div>
             <div class="word-card daily_needs hover-bounce" data-word="ടോയ്‌ലറ്റ്" data-category="daily_needs">
-                <div class="card-image-container"><span class="card-emoji">🚽</span></div>
-                <div class="card-text">ടോയ്‌ലറ്റ്</div>
+                <span class="word-emoji">🚽</span>
+                <div class="word-label">ടോയ്‌ലറ്റ്</div>
             </div>
             <div class="word-card daily_needs hover-bounce" data-word="സഹായം" data-category="daily_needs">
-                <div class="card-image-container"><span class="card-emoji">🆘</span></div>
-                <div class="card-text">സഹായം</div>
+                <span class="word-emoji">🆘</span>
+                <div class="word-label">സഹായം</div>
             </div>
             <div class="word-card daily_needs hover-bounce" data-word="ഉറക്കം" data-category="daily_needs">
-                <div class="card-image-container"><span class="card-emoji">😴</span></div>
-                <div class="card-text">ഉറക്കം</div>
+                <span class="word-emoji">😴</span>
+                <div class="word-label">ഉറക്കം</div>
             </div>
 
             <!-- Dynamically loaded icons from Database -->
             {% for icon in icons %}
             <div class="word-card {{ icon.type }} hover-bounce" data-word="{{ icon.word }}"
                 data-category="{{ icon.type }}">
-                <div class="card-image-container">
-                    {% if icon.is_emoji %}
-                    <span class="card-emoji">{{ icon.content }}</span>
-                    {% else %}
-                    <img src="{{ url_for('static', filename='images/' + icon.content) }}" alt="{{ icon.word }}"
-                        class="card-uploaded-img">
-                    {% endif %}
-                </div>
-                <div class="card-text">{{ icon.word }}</div>
+                {% if icon.is_emoji %}
+                <span class="word-emoji">{{ icon.content }}</span>
+                {% else %}
+                <img src="{{ url_for('static', filename='images/' + icon.content) }}" alt="{{ icon.word }}"
+                    class="card-uploaded-img">
+                {% endif %}
+                <div class="word-label">{{ icon.word }}</div>
             </div>
             {% endfor %}
         </div>

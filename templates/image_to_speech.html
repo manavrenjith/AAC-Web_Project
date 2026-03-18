@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Image to Malayalam Speech | AAC App{% endblock %}
+
+{% block body_class %}dashboard-body user-theme{% endblock %}
+
+{% block content %}
+<main class="aac-main">
+    <h1 class="page-title">&#128247; Image to Malayalam Speech</h1>
+
+    <section class="features-section" style="padding: 0;">
+        <div class="image-text-grid">
+            <!-- Image Upload Panel -->
+            <div class="image-upload-panel">
+                <div class="image-upload-icon">&#128247;</div>
+                <p style="font-weight:700; margin:10px 0 0;">Upload an Image</p>
+                <p style="font-size:0.9rem; color:var(--text-light); margin:4px 0 0;">JPG, PNG, GIF</p>
+                <input id="imageInput" name="image" type="file" accept="image/*" style="display:none;">
+                <button type="button" onclick="document.getElementById('imageInput').click()" class="btn btn-primary" style="margin-top:10px; width:100%;" >Choose File</button>
+                <div style="margin-top:10px; border:2px solid #FFE66D; border-radius:12px; padding:10px; min-height:100px; display:flex; align-items:center; justify-content:center; background:white;">
+                    <img id="imagePreview" alt="Selected preview" style="max-width: 100%; max-height: 120px; border-radius: 8px; display: none;">
+                    <p id="previewPlaceholder" style="color: var(--text-light); margin: 0; text-align:center;">Image preview will appear here</p>
+                </div>
+            </div>
+
+            <!-- Text Input Panel -->
+            <div class="text-input-panel">
+                <label for="englishText" style="font-weight:700; display:block; margin-bottom:8px;">Or Enter English Text</label>
+                <textarea id="englishText" name="english_text" placeholder="Type an English sentence here..." style="width:100%; border-radius:16px; border:2px solid #eee; padding:14px; min-height:200px; font-family:var(--font); resize:vertical;"></textarea>
+            </div>
+        </div>
+
+        <!-- Generate Button -->
+        <button id="generateBtn" class="btn btn-primary btn-block" style="margin-top:20px; width:100%; max-width:100%;">&#127881; Generate Malayalam Speech</button>
+        <span id="statusText" style="color: var(--text-light); display:block; margin-top:10px; text-align:center;"></span>
+
+        <!-- Result Section -->
+        <div id="resultCard" class="result-section" style="display: none; margin-top: 20px;">
+            <p style="margin: 0 0 8px; font-weight: 700; font-size:0.9rem;">RESULT: Malayalam Text</p>
+            <div class="result-malayalam" id="malayalamText"></div>
+            <p style="margin: 12px 0 8px; font-weight: 700; font-size:0.9rem;">Audio Output</p>
+            <div class="result-audio">
+                <audio id="audioPlayer" controls style="width: 100%; height:40px;"></audio>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+    const previewPlaceholder = document.getElementById('previewPlaceholder');
+    const englishText = document.getElementById('englishText');
+    const generateBtn = document.getElementById('generateBtn');
+    const statusText = document.getElementById('statusText');
+    const resultCard = document.getElementById('resultCard');
+    const malayalamText = document.getElementById('malayalamText');
+    const audioPlayer = document.getElementById('audioPlayer');
+
+    imageInput.addEventListener('change', function () {
+        const file = imageInput.files[0];
+        if (!file) {
+            imagePreview.style.display = 'none';
+            previewPlaceholder.style.display = 'block';
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            imagePreview.src = event.target.result;
+            imagePreview.style.display = 'block';
+            previewPlaceholder.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    });
+
+    generateBtn.addEventListener('click', async function () {
+        const file = imageInput.files[0];
+        const text = englishText.value.trim();
+
+        if (!file && !text) {
+            statusText.textContent = 'Please upload an image or enter text.';
+            statusText.style.color = '#dc2626';
+            return;
+        }
+
+        statusText.textContent = 'Processing... this may take some time on first run.';
+        statusText.style.color = 'var(--text-light)';
+
+        const formData = new FormData();
+        if (file) {
+            formData.append('image', file);
+        }
+        if (text) {
+            formData.append('english_text', text);
+        }
+
+        try {
+            const response = await fetch('/image_to_speech/process', {
+                method: 'POST',
+                body: formData
+            });
+
+            const payload = await response.json();
+            if (!response.ok) {
+                throw new Error(payload.error || 'Request failed');
+            }
+
+            malayalamText.textContent = payload.malayalam_text || '';
+            audioPlayer.src = payload.audio_url || '';
+            resultCard.style.display = 'block';
+
+            statusText.textContent = 'Generated successfully.';
+            statusText.style.color = '#047857';
+        } catch (error) {
+            statusText.textContent = error.message;
+            statusText.style.color = '#dc2626';
+        }
+    });
+</script>
+{% endblock %}

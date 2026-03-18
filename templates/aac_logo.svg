@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 70" width="220" height="70">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@900&amp;family=Noto+Sans+Malayalam:wght@700&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Speech bubble body -->
+  <rect x="0" y="0" width="68" height="56" rx="18" ry="18" fill="#FF6B6B"/>
+
+  <!-- Speech bubble tail -->
+  <polygon points="14,56 34,56 20,70" fill="#FF6B6B"/>
+
+  <!-- Malayalam letter ആ -->
+  <text x="34" y="40" font-family="Noto Sans Malayalam, sans-serif" font-size="30" font-weight="700" fill="white" text-anchor="middle">ആ</text>
+
+  <!-- AAC wordmark -->
+  <text x="88" y="38" font-family="Nunito, sans-serif" font-size="36" font-weight="900" fill="#2D3436" text-anchor="start">AAC</text>
+
+  <!-- Malayalam subtitle -->
+  <text x="90" y="56" font-family="Noto Sans Malayalam, Nunito, sans-serif" font-size="13" font-weight="700" fill="#4ECDC4" text-anchor="start" letter-spacing="2">മലയാളം</text>
+</svg>

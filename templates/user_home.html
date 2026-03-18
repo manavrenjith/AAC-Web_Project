@@ -5,63 +5,49 @@
 {% block body_class %}dashboard-body home-theme{% endblock %}
 
 {% block content %}
-    <main class="aac-main home-main">
+<main>
+        <div style="background: linear-gradient(135deg, #FF6B6B, #4ECDC4); border-radius: 24px; padding: 28px 32px; color: white; margin-bottom: 24px;">
+            <h1 style="font-size: 26px; font-weight: 900; margin: 0;">👋 Welcome back!</h1>
+            <p style="margin: 6px 0 0; opacity: 0.9; font-size: 15px;">What do you want to do today?</p>
+        </div>
 
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1 class="hero-title">സ്വാഗതം, {{ name }}! (Welcome, {{ name }}!)</h1>
-                <p class="hero-subtitle">What would you like to do today?</p>
-            </div>
-        </section>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px;">
+            <a href="{{ url_for('communication_board') }}" class="home-feature-card" style="background: white; border-radius: 24px; border: 2.5px solid #FF6B6B; padding: 24px 16px; text-align: center; text-decoration: none; display: block; transition: transform 0.2s;">
+                <div style="font-size: 36px; margin-bottom: 12px;">🎨</div>
+                <h3 style="font-size: 15px; font-weight: 900; color: #2D3436; margin: 0 0 6px;">Board</h3>
+                <p style="font-size: 12px; color: #888; margin: 0;">Start communication with symbols.</p>
+            </a>
 
-        <!-- Features Section -->
-        <section class="features-section" id="features">
-            <div class="features-grid">
-                
-                <a href="{{ url_for('communication_board') }}" class="feature-card feature-link-card">
-                    <div class="feature-icon">🧩</div>
-                    <h3 class="feature-title">Communication Board</h3>
-                    <p class="feature-desc">Click symbols to convert words into speech effortlessly.</p>
-                </a>
-                
-                <a href="{{ url_for('categories') }}" class="feature-card feature-link-card">
-                    <div class="feature-icon">📂</div>
-                    <h3 class="feature-title">Categories</h3>
-                    <p class="feature-desc">Symbols organized into easy categories.</p>
-                </a>
-                
-                <a href="{{ url_for('caregiver_content') }}" class="feature-card feature-link-card">
-                    <div class="feature-icon">👩‍🏫</div>
-                    <h3 class="feature-title">Caregiver Customization</h3>
-                    <p class="feature-desc">View customized symbols and images from your caregiver.</p>
-                </a>
-                
-                <a href="{{ url_for('sentence_builder') }}" class="feature-card feature-link-card">
-                    <div class="feature-icon">🔡</div>
-                    <h3 class="feature-title">Sentence Builder</h3>
-                    <p class="feature-desc">Combine symbols and type to form complete sentences.</p>
-                </a>
-                <a href="{{ url_for('text_to_speech') }}" class="feature-card feature-link-card">
-                    <div class="feature-icon">🔊</div>
-                    <h3 class="feature-title">Text to Speech</h3>
-                    <p class="feature-desc">Type words or sentences in Malayalam and hear them spoken aloud.</p>
-                </a>
-                
-                <a href="{{ url_for('speech_to_text') }}" class="feature-card feature-link-card">
-                    <div class="feature-icon">🎤</div>
-                    <h3 class="feature-title">Speech to Text</h3>
-                    <p class="feature-desc">Speak in Malayalam and see your words converted into text instantly.</p>
-                </a>
-                
-            </div>
-        </section>
-        
-    </main>
-    
-    <!-- Footer -->
-    <footer class="app-footer">
-        <p>&copy; 2026 AAC Communication System</p>
-    </footer>
+            <a href="{{ url_for('categories') }}" class="home-feature-card" style="background: white; border-radius: 24px; border: 2.5px solid #4ECDC4; padding: 24px 16px; text-align: center; text-decoration: none; display: block; transition: transform 0.2s;">
+                <div style="font-size: 36px; margin-bottom: 12px;">🗂️</div>
+                <h3 style="font-size: 15px; font-weight: 900; color: #2D3436; margin: 0 0 6px;">Categories</h3>
+                <p style="font-size: 12px; color: #888; margin: 0;">Browse words by category.</p>
+            </a>
+
+            <a href="{{ url_for('caregiver_content') }}" class="home-feature-card" style="background: white; border-radius: 24px; border: 2.5px solid #FFE66D; padding: 24px 16px; text-align: center; text-decoration: none; display: block; transition: transform 0.2s;">
+                <div style="font-size: 36px; margin-bottom: 12px;">👩‍🏫</div>
+                <h3 style="font-size: 15px; font-weight: 900; color: #2D3436; margin: 0 0 6px;">Caregiver</h3>
+                <p style="font-size: 12px; color: #888; margin: 0;">View caregiver custom content.</p>
+            </a>
+
+            <a href="{{ url_for('sentence_builder') }}" class="home-feature-card" style="background: white; border-radius: 24px; border: 2.5px solid #A855F7; padding: 24px 16px; text-align: center; text-decoration: none; display: block; transition: transform 0.2s;">
+                <div style="font-size: 36px; margin-bottom: 12px;">💬</div>
+                <h3 style="font-size: 15px; font-weight: 900; color: #2D3436; margin: 0 0 6px;">Sentences</h3>
+                <p style="font-size: 12px; color: #888; margin: 0;">Build complete sentences.</p>
+            </a>
+
+            <a href="{{ url_for('text_to_speech') }}" class="home-feature-card" style="background: white; border-radius: 24px; border: 2.5px solid #22C55E; padding: 24px 16px; text-align: center; text-decoration: none; display: block; transition: transform 0.2s;">
+                <div style="font-size: 36px; margin-bottom: 12px;">🔊</div>
+                <h3 style="font-size: 15px; font-weight: 900; color: #2D3436; margin: 0 0 6px;">TTS</h3>
+                <p style="font-size: 12px; color: #888; margin: 0;">Convert text into speech.</p>
+            </a>
+
+            <a href="{{ url_for('speech_to_text') }}" class="home-feature-card" style="background: white; border-radius: 24px; border: 2.5px solid #F59E0B; padding: 24px 16px; text-align: center; text-decoration: none; display: block; transition: transform 0.2s;">
+                <div style="font-size: 36px; margin-bottom: 12px;">🎙️</div>
+                <h3 style="font-size: 15px; font-weight: 900; color: #2D3436; margin: 0 0 6px;">STT</h3>
+                <p style="font-size: 12px; color: #888; margin: 0;">Convert speech into text.</p>
+            </a>
+        </div>
+</main>
 
 {% endblock %}
