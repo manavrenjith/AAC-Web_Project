@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}AAC Board | Category Items{% endblock %}
+
+{% block body_class %}dashboard-body home-theme{% endblock %}
+
+{% block content %}
+    <main class="aac-main">
+        
+        <!-- Header Controls -->
+        <section class="board-header-section" style="padding: 2rem; max-width: 1200px; margin: 0 auto; display: flex; justify-content: flex-start; align-items: center; border-bottom: 2px dashed #cbd5e1; margin-bottom: 2rem;">
+            <div>
+                <a href="{{ url_for('categories') }}" class="btn btn-secondary" style="margin-right: 1.5rem;">⬅️ Back to Categories</a>
+                <h1 style="display: inline-block; font-family: 'Comic Neue', cursive; color: var(--text-main); margin: 0; font-size: 2rem; vertical-align: middle; text-transform: capitalize;">{{ category | replace('_', ' ') }}</h1>
+            </div>
+        </section>
+
+        <!-- Category Items Grid -->
+        <section class="symbol-grid-section">
+            <div class="grid" id="word-grid">
+                
+                <!-- Dynamically loaded custom care-giver icons mapped to this category -->
+                {% for icon in icons %}
+                <div class="word-card hover-bounce" data-word="{{ icon.word }}" onclick="speakWord('{{ icon.word }}')">
+                    <div class="card-image-container">
+                        {% if icon.is_emoji %}
+                        <span class="card-emoji">{{ icon.content }}</span>
+                        {% else %}
+                        <img src="{{ url_for('static', filename='images/' + icon.content) }}" alt="{{ icon.word }}"
+                            class="card-uploaded-img">
+                        {% endif %}
+                    </div>
+                    <div class="card-text">{{ icon.word }}</div>
+                </div>
+                {% else %}
+                <div style="grid-column: 1 / -1; text-align: center; color: var(--text-light); padding: 3rem; font-size: 1.2rem; background: white; border-radius: 20px; border: 2px dashed #cbd5e1;">
+                    No images or symbols found in this category.
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        
+    </main>
+{% endblock %}

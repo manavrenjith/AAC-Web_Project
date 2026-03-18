@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}AAC Board | Categories{% endblock %}
+
+{% block body_class %}dashboard-body home-theme{% endblock %}
+
+{% block content %}
+    <main class="aac-main">
+        
+        <section class="board-header-section" style="padding: 2rem; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #cbd5e1; margin-bottom: 3rem;">
+            <div>
+                <a href="{{ url_for('home') }}" class="btn btn-secondary" style="margin-right: 1rem;">⬅️ Back to Home</a>
+                <h1 style="display: inline-block; font-family: 'Comic Neue', cursive; color: var(--text-main); margin: 0; font-size: 2rem; vertical-align: middle;">Explore Categories</h1>
+            </div>
+        </section>
+
+        <!-- Categories List (No Images as requested) -->
+        <section class="category-directory" style="max-width: 1200px; margin: 0 auto 4rem; padding: 0 2rem;">
+            <div class="category-list-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                {% for category in categories %}
+                    <!-- We dynamically create the card structure -->
+                    <a href="{{ url_for('category_items', category_name=category.name) }}" class="category-list-card" style="display: flex; align-items: center; justify-content: center; background: white; border: 3px solid var(--primary); border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); text-decoration: none; padding: 3rem; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+                        <h2 style="color: var(--text-main); font-family: 'Comic Neue', cursive; font-size: 1.8rem; margin: 0; text-align: center;">{{ category.name }}</h2>
+                    </a>
+                {% else %}
+                    <div style="grid-column: 1 / -1; text-align: center; color: var(--text-light); padding: 3rem; font-size: 1.2rem;">
+                        No categories found. Ask a caregiver to add some!
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        
+    </main>
+{% endblock %}

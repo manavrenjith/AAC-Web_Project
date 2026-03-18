@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Caregiver Customization | AAC App{% endblock %}
+
+{% block body_class %}dashboard-body user-theme{% endblock %}
+
+{% block content %}
+    <main class="aac-main">
+        <div style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+            <h1 style="font-family: 'Comic Neue', cursive; font-size: 2rem; color: var(--text-main);">
+                Caregiver Customizations <br>
+                <span style="font-size: 1.2rem; color: var(--text-light);">(കെയർഗിവർ നൽകിയവ)</span>
+            </h1>
+            <a href="{{ url_for('user_home') }}" class="btn" style="background: white; border: 2px solid var(--primary); color: var(--text-main);">
+                ⬅️ തിരികെ പോകുക (Back to Home)
+            </a>
+        </div>
+
+        <section style="margin-bottom: 3rem;">
+            <h2 style="font-family: 'Comic Neue', cursive; font-size: 1.8rem; color: var(--secondary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                🖼️ ചിത്രങ്ങളും ചിഹ്നങ്ങളും (Custom Symbols)
+            </h2>
+            <div class="grid" id="word-grid">
+                {% for icon in icons %}
+                <div class="word-card {{ icon.type | lower | replace(' ', '_') }} hover-bounce" data-word="{{ icon.word }}" onclick="speakWord('{{ icon.word }}')">
+                    <div class="card-image-container">
+                        {% if icon.is_emoji %}
+                        <span class="card-emoji">{{ icon.content }}</span>
+                        {% else %}
+                        <img src="{{ url_for('static', filename='images/' + icon.content) }}" alt="{{ icon.word }}"
+                            class="card-uploaded-img" style="max-height: 100px; max-width: 100px; object-fit: contain;">
+                        {% endif %}
+                    </div>
+                    <div class="card-text">{{ icon.word }}</div>
+                </div>
+                {% else %}
+                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; background: rgba(255,255,255,0.6); border-radius: 16px; border: 2px dashed #cbd5e1;">
+                    <h3 style="color: var(--text-light);">ഇതുവരെ വാക്കുകളൊന്നുമില്ല! (No custom symbols added yet!)</h3>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section style="margin-bottom: 3rem;">
+            <h2 style="font-family: 'Comic Neue', cursive; font-size: 1.8rem; color: var(--primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                📝 വാക്യങ്ങൾ (Caregiver Sentences)
+            </h2>
+            <div class="sentence-grid" style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+                {% for sentence in sentences %}
+                <div class="sentence-card hover-bounce user-sentence-card" onclick="speakWord('{{ sentence.text }}')" style="background: white; padding: 1.5rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); cursor: pointer; border-left: 5px solid var(--primary); transition: transform 0.2s, box-shadow 0.2s;">
+                    <div class="sentence-text" style="font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin: 0; display: flex; align-items: center; gap: 0.8rem;">
+                        <span style="font-size: 1.5rem;">🔊</span> {{ sentence.text }}
+                    </div>
+                </div>
+                {% else %}
+                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; background: rgba(255,255,255,0.6); border-radius: 16px; border: 2px dashed #cbd5e1;">
+                    <h3 style="color: var(--text-light);">ഇതുവരെ വാക്യങ്ങളൊന്നുമില്ല! (No custom sentences added yet!)</h3>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

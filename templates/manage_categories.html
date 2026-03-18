@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}AAC App | Manage Categories{% endblock %}
+
+{% block body_class %}dashboard-body admin-bg{% endblock %}
+
+{% block content %}
+<main class="aac-main admin-main">
+
+    <div style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+        <h1 style="font-family: 'Comic Neue', cursive; font-size: 2.5rem; color: var(--primary);">
+            🗂️ Manage Categories
+        </h1>
+        <a href="{{ url_for('caregiver_home') }}" class="btn btn-secondary" style="font-size: 1rem;">⬅️ Back to Caregiver Home Page</a>
+    </div>
+
+    <!-- Flash Messages (Reusable) -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash-alert flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="split-layout" style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start;">
+        
+        <!-- Left: Form -->
+        <div class="admin-panel feature-card" style="flex: 1; min-width: 300px;">
+            <div class="panel-header" style="border-bottom: 2px dashed #e2e8f0; margin-bottom: 1.5rem; padding-bottom: 1rem;">
+                <h3 style="color: var(--text-main); font-size: 1.5rem;">+ Add New Category</h3>
+                <p style="color: var(--text-light); font-size: 0.9rem;">Categories group your symbols together. (ഉദാഹരണത്തിന്: Vehicles)</p>
+            </div>
+            
+            <form action="{{ url_for('save_category') }}" method="POST" class="upload-form">
+                <div class="form-group">
+                    <label for="category_name" style="font-weight: bold; color: var(--primary);">Category Name (വിഭാഗം)</label>
+                    <input type="text" id="category_name" name="category_name" class="form-control" placeholder="Examples: Colors, Flowers, Vehicles..." required style="font-size: 1.2rem; padding: 1rem; border-width: 2px;">
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem; padding: 1rem; border-radius: 12px; margin-top: 1rem;">Add Category ✨</button>
+            </form>
+        </div>
+
+        <!-- Right: Current Categories Grid -->
+        <div class="admin-panel feature-card" style="flex: 2; min-width: 400px; padding: 2rem;">
+            <div class="panel-header" style="border-bottom: 2px dashed #e2e8f0; margin-bottom: 1.5rem; padding-bottom: 1rem;">
+                <h3 style="color: var(--text-main); font-size: 1.5rem;">Current Categories</h3>
+            </div>
+            
+            <div class="data-list-container" style="display: flex; flex-direction: column; gap: 1rem;">
+                {% for category in categories %}
+                
+                <div class="sentence-item" id="list-{{ category.id }}" style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 16px; padding: 1rem 1.5rem; transition: background 0.3s ease;">
+                    
+                    <!-- Display Value -->
+                    <span style="font-size: 1.3rem; font-weight: bold; color: var(--text-main);">
+                        {{ category.name }}
+                    </span>
+                    
+                    <!-- Action Buttons -->
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button type="button" class="btn btn-secondary" style="font-size: 0.9rem; padding: 0.5rem 1rem;" onclick="toggleEditCategory('{{ category.id }}')">✏️ Edit</button>
+                        
+                        <form action="{{ url_for('delete_category', category_id=category.id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('അവ ഇല്ലാതാക്കണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ? (Are you completely sure you want to delete \n{{ category.name }}?)');">
+                            <button type="submit" class="btn" style="font-size: 0.9rem; padding: 0.5rem 1rem; background: #fee2e2; color: #dc2626; border-color: #fca5a5;">🗑️ Delete</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Hidden Inline Edit Form -->
+                <div class="sentence-item" id="edit-{{ category.id }}" style="display: none; justify-content: space-between; align-items: center; background: #fffbeb; border: 2px dashed #fcd34d; border-radius: 16px; padding: 1rem 1.5rem;">
+                    
+                    <form action="{{ url_for('edit_category', category_id=category.id) }}" method="POST" style="display: flex; gap: 1rem; width: 100%; align-items: center; margin: 0;">
+                        <input type="text" name="new_name" value="{{ category.name }}" class="form-control" required style="flex: 1; font-size: 1.2rem; margin: 0; padding: 0.5rem;">
+                        
+                        <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1.5rem;">💾 Save</button>
+                        <button type="button" class="btn btn-secondary" style="padding: 0.5rem 1.5rem;" onclick="toggleEditCategory('{{ category.id }}')">❌ Cancel</button>
+                    </form>
+
+                </div>
+
+                {% else %}
+                <div class="empty-state" style="text-align: center; padding: 3rem 1rem; color: var(--text-light);">
+                    <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;">🗂️</div>
+                    <p>No custom categories created yet!<br>Use the form on the left to add your first layout collection.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function toggleEditCategory(id) {
+        const displayRow = document.getElementById('list-' + id);
+        const editRow = document.getElementById('edit-' + id);
+        
+        if (displayRow.style.display === 'none') {
+            displayRow.style.display = 'flex';
+            editRow.style.display = 'none';
+        } else {
+            displayRow.style.display = 'none';
+            editRow.style.display = 'flex';
+        }
+    }
+</script>
+{% endblock %}

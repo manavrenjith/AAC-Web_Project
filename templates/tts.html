@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}AAC Communication System | Text to Speech{% endblock %}
+
+{% block body_class %}user-theme{% endblock %}
+
+{% block content %}
+<main class="aac-main">
+    <div class="user-header">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2>Text to Speech Converter</h2>
+            <a href="{{ url_for('user_home') }}" class="btn btn-clear hover-bounce">🏠 ഹോം (Home)</a>
+        </div>
+    </div>
+
+    <!-- Text to Speech Section -->
+    <section class="features-section tts-section" id="tts-section" style="margin-top: 3rem;">
+        <div class="tts-card" style="margin-bottom: 2rem;">
+            <div class="tts-input-group">
+                <label for="ttsInput">Enter Text:</label>
+                <input type="text" id="ttsInput" class="form-control" placeholder="എനിക്ക് വെള്ളം വേണം" autofocus>
+            </div>
+            <div class="tts-buttons" style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center;">
+                <button class="btn btn-speak" onclick="speakTTSConverterText()">🔊 Speak</button>
+                <button class="btn btn-clear" onclick="clearTTSConverterText()">Clear</button>
+            </div>
+        </div>
+
+        <!-- The Digital Keyboard (Malayalam) -->
+        <h3 style="font-family: 'Comic Neue', cursive; text-align: center; margin-bottom: 1rem;">Malayalam Keyboard</h3>
+        <div class="keyboard-container" id="tts-keyboard-container"
+            style="max-width: 900px; margin: 0 auto; background: white; padding: 2rem; border-radius: 24px; border: 4px dashed var(--secondary);">
+
+            <!-- Vowels (സ്വരങ്ങൾ) -->
+            <div class="kb-row">
+                <button class="tts-kb-key hover-bounce" data-key="അ">അ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ആ">ആ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഇ">ഇ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഈ">ഈ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഉ">ഉ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഊ">ഊ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഋ">ഋ</button>
+                <button class="tts-kb-key hover-bounce" data-key="എ">എ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഏ">ഏ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഐ">ഐ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഒ">ഒ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഓ">ഓ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഔ">ഔ</button>
+            </div>
+
+            <!-- Consonants (വ്യഞ്ജനങ്ങൾ) Row 1 -->
+            <div class="kb-row">
+                <button class="tts-kb-key hover-bounce" data-key="ക">ക</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഖ">ഖ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഗ">ഗ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഘ">ഘ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ങ">ങ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ച">ച</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഛ">ഛ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ജ">ജ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഝ">ഝ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഞ">ഞ</button>
+            </div>
+
+            <!-- Consonants Row 2 -->
+            <div class="kb-row">
+                <button class="tts-kb-key hover-bounce" data-key="ട">ട</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഠ">ഠ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഡ">ഡ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഢ">ഢ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ണ">ണ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ത">ത</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഥ">ഥ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ദ">ദ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ധ">ധ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ന">ന</button>
+            </div>
+
+            <!-- Consonants Row 3 & Vowel Signs/Modifiers -->
+            <div class="kb-row">
+                <button class="tts-kb-key hover-bounce" data-key="പ">പ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഫ">ഫ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ബ">ബ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഭ">ഭ</button>
+                <button class="tts-kb-key hover-bounce" data-key="മ">മ</button>
+                <button class="tts-kb-key hover-bounce" data-key="യ">യ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ര">ര</button>
+                <button class="tts-kb-key hover-bounce" data-key="ല">ല</button>
+                <button class="tts-kb-key hover-bounce" data-key="വ">വ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ശ">ശ</button>
+            </div>
+
+            <!-- Consonants Row 4 & Action Keys -->
+            <div class="kb-row">
+                <button class="tts-kb-key hover-bounce" data-key="ഷ">ഷ</button>
+                <button class="tts-kb-key hover-bounce" data-key="സ">സ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഹ">ഹ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ള">ള</button>
+                <button class="tts-kb-key hover-bounce" data-key="ഴ">ഴ</button>
+                <button class="tts-kb-key hover-bounce" data-key="റ">റ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ാ">ാ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ി">ി</button>
+                <button class="tts-kb-key hover-bounce" data-key="ീ">ീ</button>
+                <button class="tts-kb-key kb-action hover-bounce" data-key="BACKSPACE"
+                    style="background:#FFE66D; font-size: 1.2rem; min-width: 100px;">⌫ Backspace</button>
+            </div>
+
+            <div class="kb-row">
+                <button class="tts-kb-key hover-bounce" data-key="്ര">്ര</button> <!-- Virama + Ra -->
+                <button class="tts-kb-key hover-bounce" data-key="ു">ു</button>
+                <button class="tts-kb-key hover-bounce" data-key="ൂ">ൂ</button>
+                <button class="tts-kb-key hover-bounce" data-key="െ">െ</button>
+                <button class="tts-kb-key hover-bounce" data-key="േ">േ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ൈ">ൈ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ൊ">ൊ</button>
+                <button class="tts-kb-key hover-bounce" data-key="ോ">ോ</button>
+                <button class="tts-kb-key hover-bounce" data-key="്">്</button> <!-- Chandrakkala -->
+                <button class="tts-kb-key hover-bounce" data-key="ം">ം</button> <!-- Anusvara -->
+            </div>
+
+            <div class="kb-row" style="margin-top: 1rem;">
+                <button class="tts-kb-key kb-space hover-bounce" data-key="SPACE"
+                    style="width: 80%; background: #88D49E; color: white; font-size: 1.5rem;">Space (New Word)</button>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

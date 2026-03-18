@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}Sentence Builder | AAC App{% endblock %}
+
+{% block body_class %}dashboard-body user-theme{% endblock %}
+
+{% block content %}
+    <main class="aac-main">
+        <div style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+            <h1 style="font-family: 'Comic Neue', cursive; font-size: 2rem; color: var(--text-main);">
+                Sentence Builder
+            </h1>
+            <a href="{{ url_for('user_home') }}" class="btn" style="background: white; border: 2px solid var(--primary); color: var(--text-main);">
+                ⬅️ Back to Home
+            </a>
+        </div>
+
+        <!-- Sentence Builder Strip -->
+        <div class="speech-bar-container" style="background: #e0f2fe; border: 4px dashed #38bdf8;">
+            <div class="speech-bar" id="speech-bar" style="min-height: 100px;">
+                <!-- Words appear here like magic -->
+            </div>
+            <div class="speech-controls">
+                <button id="speak-btn" class="btn btn-speak action-btn pulse-hover" style="background: #3b82f6;">
+                    <span class="icon">🔊</span> Speak Sentence
+                </button>
+                <button id="clear-btn" class="btn btn-clear action-btn hover-bounce">
+                    <span class="icon">✖️</span> Clear Sentence
+                </button>
+            </div>
+        </div>
+
+        <!-- View Toggles -->
+        <div class="view-toggles" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+            <button id="toggle-grid-btn" class="btn"
+                style="background: var(--primary); color: white; border: 2px solid var(--primary);">🔠 Pictures</button>
+            <button id="toggle-kb-btn" class="btn"
+                style="background: white; color: var(--text-main); border: 2px solid #cbd5e1;">⌨️ Type</button>
+        </div>
+
+        <!-- Word Selection Grid -->
+        <h2 style="font-family: 'Comic Neue', cursive; text-align: center; margin-bottom: 1.5rem; color: var(--text-main);">
+            Choose your words:
+        </h2>
+        
+        <div class="grid" id="word-grid">
+            <!-- I -->
+            <div class="word-card pronoun hover-bounce" data-word="ഞാൻ" data-en="I">
+                <div class="card-image-container" style="background: #fdf4ff;">
+                    <span class="card-emoji">🙋</span>
+                </div>
+                <div class="card-text">I</div>
+            </div>
+
+            <!-- Want -->
+            <div class="word-card verb hover-bounce" data-word="വേണം" data-en="Want">
+                <div class="card-image-container" style="background: #fffbeb;">
+                    <span class="card-emoji">🤲</span>
+                </div>
+                <div class="card-text">Want</div>
+            </div>
+
+            <!-- Need -->
+            <div class="word-card verb hover-bounce" data-word="ആവശ്യമുണ്ട്" data-en="Need">
+                <div class="card-image-container" style="background: #fff1f2;">
+                    <span class="card-emoji">❗</span>
+                </div>
+                <div class="card-text">Need</div>
+            </div>
+
+            <!-- Like -->
+            <div class="word-card verb hover-bounce" data-word="ഇഷ്ടമാണ്" data-en="Like">
+                <div class="card-image-container" style="background: #f0fdf4;">
+                    <span class="card-emoji">❤️</span>
+                </div>
+                <div class="card-text">Like</div>
+            </div>
+
+            <!-- Water -->
+            <div class="word-card noun hover-bounce" data-word="വെള്ളം" data-en="Water">
+                <div class="card-image-container" style="background: #eff6ff;">
+                    <span class="card-emoji">💧</span>
+                </div>
+                <div class="card-text">Water</div>
+            </div>
+
+            <!-- Food -->
+            <div class="word-card noun hover-bounce" data-word="ഭക്ഷണം" data-en="Food">
+                <div class="card-image-container" style="background: #fefce8;">
+                    <span class="card-emoji">🍔</span>
+                </div>
+                <div class="card-text">Food</div>
+            </div>
+
+            <!-- Help -->
+            <div class="word-card verb hover-bounce" data-word="സഹായിക്കുക" data-en="Help">
+                <div class="card-image-container" style="background: #faf5ff;">
+                    <span class="card-emoji">🤝</span>
+                </div>
+                <div class="card-text">Help</div>
+            </div>
+
+            <!-- Play -->
+            <div class="word-card verb hover-bounce" data-word="കളിക്കുക" data-en="Play">
+                <div class="card-image-container" style="background: #f0fdfa;">
+                    <span class="card-emoji">⚽</span>
+                </div>
+                <div class="card-text">Play</div>
+            </div>
+        </div>
+
+        <!-- The Digital Keyboard (Malayalam) -->
+        <div class="keyboard-container" id="keyboard-container"
+            style="display: none; max-width: 900px; margin: 0 auto; background: white; padding: 2rem; border-radius: 24px; border: 4px dashed var(--secondary);">
+
+            <!-- Vowels (സ്വരങ്ങൾ) -->
+            <div class="kb-row">
+                <button class="kb-key hover-bounce" data-key="അ">അ</button>
+                <button class="kb-key hover-bounce" data-key="ആ">ആ</button>
+                <button class="kb-key hover-bounce" data-key="ഇ">ഇ</button>
+                <button class="kb-key hover-bounce" data-key="ഈ">ഈ</button>
+                <button class="kb-key hover-bounce" data-key="ഉ">ഉ</button>
+                <button class="kb-key hover-bounce" data-key="ഊ">ഊ</button>
+                <button class="kb-key hover-bounce" data-key="ഋ">ഋ</button>
+                <button class="kb-key hover-bounce" data-key="എ">എ</button>
+                <button class="kb-key hover-bounce" data-key="ഏ">ഏ</button>
+                <button class="kb-key hover-bounce" data-key="ഐ">ഐ</button>
+                <button class="kb-key hover-bounce" data-key="ഒ">ഒ</button>
+                <button class="kb-key hover-bounce" data-key="ഓ">ഓ</button>
+                <button class="kb-key hover-bounce" data-key="ഔ">ഔ</button>
+            </div>
+
+            <!-- Consonants (വ്യഞ്ജനങ്ങൾ) Row 1 -->
+            <div class="kb-row">
+                <button class="kb-key hover-bounce" data-key="ക">ക</button>
+                <button class="kb-key hover-bounce" data-key="ഖ">ഖ</button>
+                <button class="kb-key hover-bounce" data-key="ഗ">ഗ</button>
+                <button class="kb-key hover-bounce" data-key="ഘ">ഘ</button>
+                <button class="kb-key hover-bounce" data-key="ങ">ങ</button>
+                <button class="kb-key hover-bounce" data-key="ച">ച</button>
+                <button class="kb-key hover-bounce" data-key="ഛ">ഛ</button>
+                <button class="kb-key hover-bounce" data-key="ജ">ജ</button>
+                <button class="kb-key hover-bounce" data-key="ഝ">ഝ</button>
+                <button class="kb-key hover-bounce" data-key="ഞ">ഞ</button>
+            </div>
+
+            <!-- Consonants Row 2 -->
+            <div class="kb-row">
+                <button class="kb-key hover-bounce" data-key="ട">ട</button>
+                <button class="kb-key hover-bounce" data-key="ഠ">ഠ</button>
+                <button class="kb-key hover-bounce" data-key="ഡ">ഡ</button>
+                <button class="kb-key hover-bounce" data-key="ഢ">ഢ</button>
+                <button class="kb-key hover-bounce" data-key="ണ">ണ</button>
+                <button class="kb-key hover-bounce" data-key="ത">ത</button>
+                <button class="kb-key hover-bounce" data-key="ഥ">ഥ</button>
+                <button class="kb-key hover-bounce" data-key="ദ">ദ</button>
+                <button class="kb-key hover-bounce" data-key="ധ">ധ</button>
+                <button class="kb-key hover-bounce" data-key="ന">ന</button>
+            </div>
+
+            <!-- Consonants Row 3 & Vowel Signs/Modifiers -->
+            <div class="kb-row">
+                <button class="kb-key hover-bounce" data-key="പ">പ</button>
+                <button class="kb-key hover-bounce" data-key="ഫ">ഫ</button>
+                <button class="kb-key hover-bounce" data-key="ബ">ബ</button>
+                <button class="kb-key hover-bounce" data-key="ഭ">ഭ</button>
+                <button class="kb-key hover-bounce" data-key="മ">മ</button>
+                <button class="kb-key hover-bounce" data-key="യ">യ</button>
+                <button class="kb-key hover-bounce" data-key="ര">ര</button>
+                <button class="kb-key hover-bounce" data-key="ല">ല</button>
+                <button class="kb-key hover-bounce" data-key="വ">വ</button>
+                <button class="kb-key hover-bounce" data-key="ശ">ശ</button>
+            </div>
+
+            <!-- Consonants Row 4 & Action Keys -->
+            <div class="kb-row">
+                <button class="kb-key hover-bounce" data-key="ഷ">ഷ</button>
+                <button class="kb-key hover-bounce" data-key="സ">സ</button>
+                <button class="kb-key hover-bounce" data-key="ഹ">ഹ</button>
+                <button class="kb-key hover-bounce" data-key="ള">ള</button>
+                <button class="kb-key hover-bounce" data-key="ഴ">ഴ</button>
+                <button class="kb-key hover-bounce" data-key="റ">റ</button>
+                <button class="kb-key hover-bounce" data-key="ാ">ാ</button>
+                <button class="kb-key hover-bounce" data-key="ി">ി</button>
+                <button class="kb-key hover-bounce" data-key="ീ">ീ</button>
+                <button class="kb-key kb-action hover-bounce" data-key="BACKSPACE"
+                    style="background:#FFE66D; font-size: 1.2rem; min-width: 100px;">⌫ Backspace</button>
+            </div>
+
+            <div class="kb-row">
+                <button class="kb-key hover-bounce" data-key="്ര">്ര</button> <!-- Virama + Ra -->
+                <button class="kb-key hover-bounce" data-key="ു">ു</button>
+                <button class="kb-key hover-bounce" data-key="ൂ">ൂ</button>
+                <button class="kb-key hover-bounce" data-key="െ">െ</button>
+                <button class="kb-key hover-bounce" data-key="േ">േ</button>
+                <button class="kb-key hover-bounce" data-key="ൈ">ൈ</button>
+                <button class="kb-key hover-bounce" data-key="ൊ">ൊ</button>
+                <button class="kb-key hover-bounce" data-key="ോ">ോ</button>
+                <button class="kb-key hover-bounce" data-key="്">്</button> <!-- Chandrakkala -->
+                <button class="kb-key hover-bounce" data-key="ം">ം</button> <!-- Anusvara -->
+            </div>
+
+            <div class="kb-row" style="margin-top: 1rem;">
+                <button class="kb-key kb-space hover-bounce" data-key="SPACE"
+                    style="width: 80%; background: #88D49E; color: white; font-size: 1.5rem;">Space (New Word)</button>
+            </div>
+        </div>
+
+    </main>
+{% endblock %}

@@ -1,0 +1,317 @@
+:root {
+    --primary: #6366f1;
+    /* Premium Indigo */
+    --primary-hover: #4f46e5;
+    --bg-grad: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --text: #1e293b;
+    --border: rgba(255, 255, 255, 0.4);
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --success: #10b981;
+    --shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg-grad);
+    background-attachment: fixed;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: var(--glass-border);
+    padding: 1.5rem 2rem;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    align-items: center;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: var(--primary);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.logout-btn {
+    padding: 0.5rem 1.2rem;
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.logout-btn:hover {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+}
+
+.speech-bar {
+    width: 100%;
+    max-width: 900px;
+    min-height: 90px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 3px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.speech-bar.speaking {
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.word-chip {
+    background: linear-gradient(135deg, var(--primary), #818cf8);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.8rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: var(--success);
+    color: white;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+.action-btn:active {
+    transform: scale(0.95);
+}
+
+.action-btn.clear {
+    background-color: var(--danger);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.action-btn.clear:hover {
+    background-color: var(--danger-hover);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+}
+
+.category-filters {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 1.5rem 0 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    background: white;
+    border-radius: 99px;
+    font-weight: 600;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    font-size: 1rem;
+}
+
+.filter-btn:hover {
+    background: #f1f5f9;
+    transform: translateY(-1px);
+}
+
+.filter-btn.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+main {
+    flex: 1;
+    padding: 1rem 2rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.word-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: var(--glass-border);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow);
+    position: relative;
+    user-select: none;
+}
+
+.word-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: #cbd5e1;
+    transition: background 0.3s;
+}
+
+.word-card.pronoun::before {
+    background: #fbbf24;
+}
+
+.word-card.verb::before {
+    background: #34d399;
+}
+
+.word-card.noun::before {
+    background: #60a5fa;
+}
+
+.word-card.adjective::before {
+    background: #f472b6;
+}
+
+.word-card.hidden {
+    display: none;
+}
+
+.word-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+.word-card:active {
+    transform: translateY(0) scale(0.96);
+}
+
+.word-card.playing {
+    animation: pulse 0.5s ease-in-out;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.92);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.card-image-container {
+    height: 140px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(241, 245, 249, 0.4);
+    padding: 1rem;
+    margin-top: 6px;
+}
+
+.card-emoji {
+    font-size: 5rem;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.word-card:hover .card-emoji {
+    transform: scale(1.15) rotate(5deg);
+}
+
+.card-text {
+    padding: 1.2rem;
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: #334155;
+    text-transform: capitalize;
+    background: white;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}

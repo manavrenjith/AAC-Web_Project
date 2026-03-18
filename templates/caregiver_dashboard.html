@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+
+{% block title %}Caregiver Dashboard | AAC Management{% endblock %}
+
+{% block body_class %}dashboard-body admin-bg{% endblock %}
+
+{% block content %}
+    <main class="admin-main">
+        
+        <div style="margin-bottom: 2rem; display: flex; justify-content: flex-start;">
+            <a href="{{ url_for('caregiver_home') }}" class="btn btn-secondary" style="font-size: 1rem;">⬅️ Back to Caregiver Home Page</a>
+        </div>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages" style="margin-bottom: 2rem;">
+            {% for category, message in messages %}
+            <div class="flash-alert flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Add New Word Form -->
+        <div class="admin-panel" style="margin-bottom: 2rem;">
+            <div class="panel-header">
+                <h3>+ Add New Image/Symbol</h3>
+            </div>
+            <form action="{{ url_for('add_icon') }}" method="POST" enctype="multipart/form-data" class="upload-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="word">Word/Phrase</label>
+                        <input type="text" id="word" name="word" class="form-control" autocomplete="off" required
+                            placeholder="Example: Water">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category" class="form-control" required style="font-size: 1.1rem; padding: 0.8rem;">
+                            <!-- Dynamically loaded categories -->
+                            {% for cat in categories %}
+                                <option value="{{ cat.name }}">{{ cat.name }}</option>
+                            {% else %}
+                                <option value="" disabled selected>No categories available. Add one first!</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="text-align: right; margin-bottom: 1rem;">
+                    <button type="button" id="toggle-kb-btn" class="btn" style="background: white; border: 2px solid var(--primary); color: var(--text-main);">⌨️ മലയാളം കീബോർഡ് (Malayalam Keyboard)</button>
+                </div>
+                
+                <!-- The Digital Keyboard (Malayalam) -->
+                <div class="keyboard-container" id="keyboard-container"
+                    style="display: none; max-width: 900px; margin: 0 auto 2rem; background: white; padding: 1.5rem; border-radius: 16px; border: 3px dashed var(--secondary);">
+                    
+                    <!-- Vowels (സ്വരങ്ങൾ) -->
+                    <div class="kb-row">
+                        <button type="button" class="kb-key hover-bounce" data-key="അ">അ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ആ">ആ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഇ">ഇ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഈ">ഈ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഉ">ഉ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഊ">ഊ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഋ">ഋ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="എ">എ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഏ">ഏ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഐ">ഐ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഒ">ഒ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഓ">ഓ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഔ">ഔ</button>
+                    </div>
+
+                    <!-- Consonants (വ്യഞ്ജനങ്ങൾ) Row 1 -->
+                    <div class="kb-row">
+                        <button type="button" class="kb-key hover-bounce" data-key="ക">ക</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഖ">ഖ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഗ">ഗ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഘ">ഘ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ങ">ങ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ച">ച</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഛ">ഛ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ജ">ജ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഝ">ഝ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഞ">ഞ</button>
+                    </div>
+
+                    <!-- Consonants Row 2 -->
+                    <div class="kb-row">
+                        <button type="button" class="kb-key hover-bounce" data-key="ട">ട</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഠ">ഠ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഡ">ഡ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഢ">ഢ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ണ">ണ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ത">ത</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഥ">ഥ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ദ">ദ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ധ">ധ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ന">ന</button>
+                    </div>
+
+                    <!-- Consonants Row 3 & Vowel Signs/Modifiers -->
+                    <div class="kb-row">
+                        <button type="button" class="kb-key hover-bounce" data-key="പ">പ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഫ">ഫ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ബ">ബ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഭ">ഭ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="മ">മ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="യ">യ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ര">ര</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ല">ല</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="വ">വ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ശ">ശ</button>
+                    </div>
+
+                    <!-- Consonants Row 4 & Action Keys -->
+                    <div class="kb-row">
+                        <button type="button" class="kb-key hover-bounce" data-key="ഷ">ഷ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="സ">സ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഹ">ഹ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ള">ള</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ഴ">ഴ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="റ">റ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ാ">ാ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ി">ി</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ീ">ീ</button>
+                        <button type="button" class="kb-key kb-action hover-bounce" data-key="BACKSPACE"
+                            style="background:#FFE66D; font-size: 1.2rem; min-width: 100px;">⌫ മായ്ക്കുക</button>
+                    </div>
+
+                    <div class="kb-row">
+                        <button type="button" class="kb-key hover-bounce" data-key="്ര">്ര</button> <!-- Virama + Ra -->
+                        <button type="button" class="kb-key hover-bounce" data-key="ു">ു</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ൂ">ൂ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="െ">െ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="േ">േ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ൈ">ൈ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ൊ">ൊ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="ോ">ോ</button>
+                        <button type="button" class="kb-key hover-bounce" data-key="്">്</button> <!-- Chandrakkala -->
+                        <button type="button" class="kb-key hover-bounce" data-key="ം">ം</button> <!-- Anusvara -->
+                    </div>
+
+                    <div class="kb-row" style="margin-top: 1rem;">
+                        <button type="button" class="kb-key kb-space hover-bounce" data-key="SPACE"
+                            style="width: 80%; background: #88D49E; color: white; font-size: 1.5rem;">സ്പേസ് (Space - പുതിയ വാക്ക്)</button>
+                    </div>
+                </div>
+
+                <div class="form-row upload-row">
+                    <div class="form-group">
+                        <label for="image">Upload Custom Image</label>
+                        <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                    </div>
+                    <div class="form-group or-divider">
+                        <span>OR</span>
+                    </div>
+                    <div class="form-group" style="position: relative;">
+                        <label for="emoji_text">Fallback Emoji</label>
+                        <div style="display: flex; gap: 0.5rem; align-items: center;">
+                            <input type="text" id="emoji_text" name="emoji_text" class="form-control" maxlength="4"
+                                placeholder="Example: 🥛" style="flex: 1;">
+                            <button type="button" id="emoji-btn" class="btn"
+                                style="padding: 0.8rem; border: 2px solid #cbd5e1; background: white; border-radius: 8px;">😀</button>
+                        </div>
+
+                        <!-- The Hidden Emoji Picker Popup -->
+                        <div id="emoji-picker-container"
+                            style="display: none; position: absolute; top: 100%; right: 0; z-index: 1000; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-radius: 12px; margin-top: 0.5rem;">
+                            <emoji-picker></emoji-picker>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Save Word</button>
+            </form>
+        </div>
+
+        <!-- Vocabulary Data Table -->
+        <div class="admin-panel">
+            <div class="panel-header">
+                <h3>Manage Vocabulary</h3>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Image/Emoji</th>
+                            <th>Word</th>
+                            <th>Category</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for icon in icons %}
+                        <tr>
+                            <td class="td-icon">
+                                {% if icon.is_emoji %}
+                                <span class="table-emoji">{{ icon.content }}</span>
+                                {% else %}
+                                <img src="{{ url_for('static', filename='images/' + icon.content) }}"
+                                    alt="{{ icon.word }}" class="table-uploaded-img">
+                                {% endif %}
+                            </td>
+                            <td class="td-word"><strong>{{ icon.word }}</strong></td>
+                            <td><span class="badge badge-{{ icon.type }}">{{ icon.type|capitalize|replace('_', ' ') }}</span></td>
+                            <td class="td-actions">
+                                <form action="{{ url_for('delete_icon', item_id=icon.id) }}" method="POST"
+                                    style="display:inline;"
+                                    onsubmit="return confirm('Are you sure you want to delete this icon?');">
+                                    <button type="submit" class="btn-icon delete"
+                                        title="Delete">🗑️</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" style="text-align:center; padding: 2rem;">No words found. Add one above!</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    <!-- Caregiver Emoji & Keyboard Logic -->
+    <script>
+        // Emoji Picker Logic
+        const emojiBtn = document.getElementById('emoji-btn');
+        const emojiPickerContainer = document.getElementById('emoji-picker-container');
+        const emojiInput = document.getElementById('emoji_text');
+        const picker = document.querySelector('emoji-picker');
+
+        if (emojiBtn && picker) {
+            // Toggle picker
+            emojiBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const isHidden = emojiPickerContainer.style.display === 'none';
+                emojiPickerContainer.style.display = isHidden ? 'block' : 'none';
+            });
+
+            // Listen for emoji selection
+            picker.addEventListener('emoji-click', event => {
+                emojiInput.value = event.detail.unicode;
+                emojiPickerContainer.style.display = 'none'; // hide after picking
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!emojiBtn.contains(e.target) && !emojiPickerContainer.contains(e.target)) {
+                    emojiPickerContainer.style.display = 'none';
+                }
+            });
+        }
+
+        // Malayalam Keyboard Logic
+        const toggleKbBtn = document.getElementById('toggle-kb-btn');
+        const keyboardContainer = document.getElementById('keyboard-container');
+        const wordInput = document.getElementById('word');
+        const kbKeys = document.querySelectorAll('.kb-key');
+
+        if (toggleKbBtn && keyboardContainer && wordInput) {
+            toggleKbBtn.addEventListener('click', () => {
+                const isHidden = keyboardContainer.style.display === 'none';
+                keyboardContainer.style.display = isHidden ? 'block' : 'none';
+                toggleKbBtn.style.background = isHidden ? 'var(--primary)' : 'white';
+                toggleKbBtn.style.color = isHidden ? 'white' : 'var(--text-main)';
+            });
+
+            kbKeys.forEach(btn => {
+                // Prevent input focus loss when clicking buttons
+                btn.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                });
+                
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const key = btn.getAttribute('data-key');
+                    if (key) {
+                        const start = wordInput.selectionStart || 0;
+                        const end = wordInput.selectionEnd || 0;
+                        const text = wordInput.value;
+                        
+                        if (key === 'BACKSPACE') {
+                            if (start === end && start > 0) {
+                                wordInput.value = text.slice(0, start - 1) + text.slice(end);
+                                wordInput.selectionStart = wordInput.selectionEnd = start - 1;
+                            } else if (start !== end) {
+                                wordInput.value = text.slice(0, start) + text.slice(end);
+                                wordInput.selectionStart = wordInput.selectionEnd = start;
+                            }
+                        } else if (key === 'SPACE') {
+                            wordInput.value = text.slice(0, start) + ' ' + text.slice(end);
+                            wordInput.selectionStart = wordInput.selectionEnd = start + 1;
+                        } else {
+                            // Insert at cursor position or append
+                            wordInput.value = text.slice(0, start) + key + text.slice(end);
+                            wordInput.selectionStart = wordInput.selectionEnd = start + key.length;
+                        }
+                        
+                        wordInput.focus();
+                    }
+                });
+            });
+        }
+    </script>
+{% endblock %}

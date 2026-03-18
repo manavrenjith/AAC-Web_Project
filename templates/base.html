@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}എ.എ.സി ആശയവിനിമയ ഉപകരണം{% endblock %}</title>
+    <!-- Child friendly fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Include Emoji Picker library -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1/index.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu" style="background: none; border: none; font-size: 2rem; color: var(--primary); cursor: pointer; padding-right: 10px;">
+                    ☰
+                </button>
+                <span class="nav-logo">🌟</span>
+                <span class="nav-title">AAC App</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar-nav" id="sidebar-nav">
+        <div class="sidebar-header">
+            <span class="nav-logo">🌟</span>
+            <span class="nav-title" style="color: var(--primary); font-family: 'Comic Neue', cursive; font-size: 1.5rem; font-weight: 800;">Menu</span>
+            <button class="close-btn" onclick="toggleMobileMenu()">✖</button>
+        </div>
+            
+            <ul class="nav-links">
+                <li class="nav-item">
+                    {% if session.get('role') == 'caregiver' %}
+                    <a href="{{ url_for('caregiver_home') }}" class="nav-link {% if request.endpoint == 'caregiver_home' %}active{% endif %}" id="nav-home">
+                        <span class="nav-icon">🏠</span> Caregiver Home Page
+                    </a>
+                    {% elif session.get('role') == 'user' %}
+                    <a href="{{ url_for('user_home') }}" class="nav-link {% if request.endpoint == 'user_home' %}active{% endif %}" id="nav-home">
+                        <span class="nav-icon">🏠</span> User Home
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('home') }}" class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" id="nav-home">
+                        <span class="nav-icon">🏠</span> Home
+                    </a>
+                    {% endif %}
+                </li>
+
+                {% if session.get('role') == 'user' or not session.get('user') %}
+                <!-- ONLY show User specific tools to users or logged out visitors -->
+                <li class="nav-item">
+                    <a href="{{ url_for('categories') }}" class="nav-link {% if request.endpoint == 'categories' %}active{% endif %}" id="nav-categories" onclick="toggleMobileMenu()">
+                        <span class="nav-icon">📁</span> Categories
+                    </a>
+                </li>
+                
+
+                {% endif %}
+
+                {% if session.get('role') == 'caregiver' %}
+                <!-- ONLY show Management tools to Caregivers -->
+                <li class="nav-item">
+                    <a href="{{ url_for('caregiver_dashboard') }}" class="nav-link {% if request.endpoint == 'caregiver_dashboard' %}active{% endif %}" id="nav-settings">
+                        <span class="nav-icon">🖼️</span> Media Upload
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('add_sentences') }}" class="nav-link {% if request.endpoint == 'add_sentences' %}active{% endif %}" id="nav-settings">
+                        <span class="nav-icon">📝</span> Add Sentences
+                    </a>
+                </li>
+                {% endif %}
+
+                {% if session.get('user') %}
+                <li class="nav-item">
+                    <a href="{{ url_for('logout') }}" class="nav-link logout-btn">
+                        <span class="nav-icon">👋</span> Logout
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a href="{{ url_for('login') }}" class="nav-link logout-btn" style="border-color: var(--success); color: var(--success);">
+                        <span class="nav-icon">🔑</span> Login
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <!-- Include ResponsiveVoice for reliable TTS -->
+    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

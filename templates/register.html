@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAC സിസ്റ്റം | രജിസ്റ്റർ</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Nunito:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="login-body">
+
+    <div class="login-container">
+        <div class="login-header">
+            <div class="login-icon">📝✨</div>
+            <h1>അക്കൗണ്ട് സൃഷ്ടിക്കുക</h1>
+            <p>ഞങ്ങളുടെ ആശയവിനിമയ ആപ്പിൽ ചേരുക!</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="flash-alert flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <form action="/register" method="POST" class="login-form">
+            <div class="form-group">
+                <label for="name">👋 പൂർണ്ണ നാമം (Full Name)</label>
+                <input type="text" id="name" name="name" class="form-control"
+                    placeholder="ഉദാഹരണത്തിന്: ഡ്രൂ അല്ലെങ്കിൽ രക്ഷിതാവ്" required>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 2rem;">
+                <label for="role_type">🎭 ഞാൻ രജിസ്റ്റർ ചെയ്യുന്നത്:</label>
+                <select id="role_type" name="role_type" class="form-control" required style="cursor:pointer;">
+                    <option value="" disabled selected>ഒരു അക്കൗണ്ട് തരം തിരഞ്ഞെടുക്കുക...</option>
+                    <option value="user">🧒 കുട്ടി (User / Child)</option>
+                    <option value="caregiver">🤝 സഹായി (Caregiver / Parent)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="username">👤 പുതിയ യൂസർനെയിം</label>
+                <input type="text" id="username" name="username" class="form-control"
+                    placeholder="ഒരു യൂസർനെയിം തിരഞ്ഞെടുക്കുക" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">🔒 പുതിയ പാസ്‌വേഡ്</label>
+                <input type="password" id="password" name="password" class="form-control"
+                    placeholder="ഒരു പാസ്‌വേഡ് തിരഞ്ഞെടുക്കുക" required>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn btn-user" style="background-color: #88D49E; width: 100%;">✅ അക്കൗണ്ട്
+                    സൃഷ്ടിക്കുക</button>
+            </div>
+        </form>
+
+        <div class="login-hints" style="margin-top: 1.5rem;">
+            <p>നിലവിൽ അക്കൗണ്ട് ഉണ്ടോ? <a href="{{ url_for('login') }}"
+                    style="color: var(--primary); font-weight: bold; text-decoration: none;">ഇവിടെ ലോഗിൻ ചെയ്യുക!</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+
+</html>

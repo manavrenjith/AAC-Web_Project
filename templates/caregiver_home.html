@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Caregiver Home | AAC App{% endblock %}
+
+{% block body_class %}dashboard-body admin-bg{% endblock %}
+
+{% block content %}
+<main class="aac-main">
+    <div style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+        <h1 style="font-family: 'Comic Neue', cursive; font-size: 2.5rem; color: var(--primary);">
+            Caregiver Home
+            <span style="font-size: 1.2rem; color: var(--text-light); display:block; margin-top: 0.5rem;">
+                സ്വാഗതം, {{ name }} (Welcome, {{ name }})
+            </span>
+        </h1>
+    </div>
+
+    <section class="features-section" style="max-width: 100%; margin: 0; padding: 0;">
+        <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            
+            <a href="{{ url_for('caregiver_dashboard') }}" class="feature-card feature-link-card hover-bounce">
+                <div class="feature-icon">🖼️</div>
+                <h3 class="feature-title">Upload Images & Symbols</h3>
+                <p class="feature-desc">Upload new images to static/images/custom/ and assign words.</p>
+            </a>
+            
+            <a href="{{ url_for('add_sentences') }}" class="feature-card feature-link-card hover-bounce">
+                <div class="feature-icon">📝</div>
+                <h3 class="feature-title">Add Sentences</h3>
+                <p class="feature-desc">Create custom sentences for the sentence builder feature.</p>
+            </a>
+
+            <a href="{{ url_for('manage_categories') }}" class="feature-card feature-link-card hover-bounce">
+                <div class="feature-icon">🗂️</div>
+                <h3 class="feature-title">Manage Categories</h3>
+                <p class="feature-desc">Organize content into helpful categories.</p>
+            </a>
+
+            <a href="{{ url_for('view_content') }}" class="feature-card feature-link-card hover-bounce">
+                <div class="feature-icon">👀</div>
+                <h3 class="feature-title">View Uploaded Content</h3>
+                <p class="feature-desc">See the grid of items currently presented to the user.</p>
+            </a>
+            
+            <a href="{{ url_for('logout') }}" class="feature-card feature-link-card hover-bounce" style="border-top: 5px solid #ef4444;">
+                <div class="feature-icon">🚪</div>
+                <h3 class="feature-title">Logout</h3>
+                <p class="feature-desc">Sign out of your Caregiver account.</p>
+            </a>
+            
+        </div>
+    </section>
+</main>
+{% endblock %}

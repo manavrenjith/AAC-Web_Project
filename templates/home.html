@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}AAC Communication System | Home{% endblock %}
+
+{% block body_class %}dashboard-body home-theme{% endblock %}
+
+{% block content %}
+    <main class="aac-main home-main">
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">AAC Communication System</h1>
+                <p class="hero-subtitle">Helping children communicate using images and speech.</p>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <h2 class="section-heading">Why Choose Us?</h2>
+            <div class="features-grid">
+                
+                <a href="{{ url_for('communication_board') }}" class="feature-card feature-link-card">
+                    <div class="feature-icon">🧩</div>
+                    <h3 class="feature-title">Communication Board</h3>
+                    <p class="feature-desc">Users can click symbols to convert words into speech effortlessly.</p>
+                </a>
+                
+                <a href="{{ url_for('categories') }}" class="feature-card feature-link-card">
+                    <div class="feature-icon">📂</div>
+                    <h3 class="feature-title">Categories</h3>
+                    <p class="feature-desc">Symbols organized into easy categories such as food, emotions, and actions.</p>
+                </a>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">👩‍🏫</div>
+                    <h3 class="feature-title">Caregiver Customization</h3>
+                    <p class="feature-desc">Caregivers can upload new images and custom symbols anytime.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔡</div>
+                    <h3 class="feature-title">Sentence Builder</h3>
+                    <p class="feature-desc">Users can combine symbols to form complete, meaningful sentences.</p>
+                </div>
+                
+            </div>
+        </section>
+
+
+
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>&copy; 2026 AAC Communication System</p>
+    </footer>
+
+{% endblock %}

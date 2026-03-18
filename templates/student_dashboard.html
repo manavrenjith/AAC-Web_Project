@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | AAC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="dashboard-body">
+
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div class="user-greeting">
+                <span class="avatar">👦</span>
+                <h2>Hi, {{ name }}!</h2>
+            </div>
+            <!-- 8. Add a logout button. -->
+            <a href="/logout" class="btn btn-outline btn-logout">Logout</a>
+        </div>
+    </header>
+
+    <main class="aac-main">
+        <div class="speech-bar-container">
+            <div class="speech-bar" id="speech-bar">
+                <!-- Words go here -->
+            </div>
+            <div class="speech-controls">
+                <button id="speak-btn" class="btn btn-success action-btn pulse-hover">
+                    <span class="icon">🔊</span> Speak
+                </button>
+                <button id="clear-btn" class="btn btn-danger action-btn">
+                    <span class="icon">✖️</span> Clear
+                </button>
+            </div>
+        </div>
+
+        <div class="grid" id="word-grid">
+            {% for icon in icons %}
+            <div class="word-card {{ icon.type }}" data-word="{{ icon.word }}">
+                <div class="card-image-container">
+                    <span class="card-emoji">{{ icon.emoji }}</span>
+                </div>
+                <div class="card-text">{{ icon.word }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

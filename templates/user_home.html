@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}AAC Communication System | User Home{% endblock %}
+
+{% block body_class %}dashboard-body home-theme{% endblock %}
+
+{% block content %}
+    <main class="aac-main home-main">
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">സ്വാഗതം, {{ name }}! (Welcome, {{ name }}!)</h1>
+                <p class="hero-subtitle">What would you like to do today?</p>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="features-grid">
+                
+                <a href="{{ url_for('communication_board') }}" class="feature-card feature-link-card">
+                    <div class="feature-icon">🧩</div>
+                    <h3 class="feature-title">Communication Board</h3>
+                    <p class="feature-desc">Click symbols to convert words into speech effortlessly.</p>
+                </a>
+                
+                <a href="{{ url_for('categories') }}" class="feature-card feature-link-card">
+                    <div class="feature-icon">📂</div>
+                    <h3 class="feature-title">Categories</h3>
+                    <p class="feature-desc">Symbols organized into easy categories.</p>
+                </a>
+                
+                <a href="{{ url_for('caregiver_content') }}" class="feature-card feature-link-card">
+                    <div class="feature-icon">👩‍🏫</div>
+                    <h3 class="feature-title">Caregiver Customization</h3>
+                    <p class="feature-desc">View customized symbols and images from your caregiver.</p>
+                </a>
+                
+                <a href="{{ url_for('sentence_builder') }}" class="feature-card feature-link-card">
+                    <div class="feature-icon">🔡</div>
+                    <h3 class="feature-title">Sentence Builder</h3>
+                    <p class="feature-desc">Combine symbols and type to form complete sentences.</p>
+                </a>
+                <a href="{{ url_for('text_to_speech') }}" class="feature-card feature-link-card">
+                    <div class="feature-icon">🔊</div>
+                    <h3 class="feature-title">Text to Speech</h3>
+                    <p class="feature-desc">Type words or sentences in Malayalam and hear them spoken aloud.</p>
+                </a>
+                
+                <a href="{{ url_for('speech_to_text') }}" class="feature-card feature-link-card">
+                    <div class="feature-icon">🎤</div>
+                    <h3 class="feature-title">Speech to Text</h3>
+                    <p class="feature-desc">Speak in Malayalam and see your words converted into text instantly.</p>
+                </a>
+                
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>&copy; 2026 AAC Communication System</p>
+    </footer>
+
+{% endblock %}

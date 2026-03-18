@@ -1,0 +1,212 @@
+{
+  "users": {
+    "child1": {
+      "password": "123",
+      "role": "user",
+      "name": "Timmy"
+    },
+    "admin1": {
+      "password": "admin",
+      "role": "caregiver",
+      "name": "Mom"
+    },
+    "sali": {
+      "password": "sali123",
+      "role": "caregiver",
+      "name": "saliha"
+    },
+    "dev": {
+      "password": "dev123",
+      "role": "user",
+      "name": "devs"
+    },
+    "salii": {
+      "password": "sali123",
+      "role": "user",
+      "name": "sali"
+    },
+    "devs": {
+      "password": "devs123",
+      "role": "caregiver",
+      "name": "dev"
+    },
+    "caregiver_test": {
+      "password": "123",
+      "role": "caregiver",
+      "name": "Test Caregiver"
+    },
+    "testuser1": {
+      "password": "password123",
+      "role": "user",
+      "name": "Test User"
+    }
+  },
+  "icons": [
+    {
+      "id": "1",
+      "word": "വെള്ളം",
+      "type": "noun",
+      "is_emoji": true,
+      "content": "💧"
+    },
+    {
+      "id": "2",
+      "word": "ഭക്ഷണം",
+      "type": "noun",
+      "is_emoji": true,
+      "content": "🍔"
+    },
+    {
+      "id": "3",
+      "word": "സഹായം",
+      "type": "verb",
+      "is_emoji": true,
+      "content": "🤝"
+    },
+    {
+      "id": "4",
+      "word": "അതെ",
+      "type": "adjective",
+      "is_emoji": true,
+      "content": "👍"
+    },
+    {
+      "id": "5",
+      "word": "ഇല്ല",
+      "type": "adjective",
+      "is_emoji": true,
+      "content": "👎"
+    },
+    {
+      "id": "ef9d31e3-a433-4d41-8f5a-1499e0c322ca",
+      "word": "വെള്ളം",
+      "type": "noun",
+      "is_emoji": false,
+      "content": "ef9d31e3-a433-4d41-8f5a-1499e0c322ca_water.png"
+    },
+    {
+      "id": "0c338e7e-dd2e-42ab-8acb-d72412b1014e",
+      "word": "കാർ",
+      "type": "Vehicles",
+      "is_emoji": false,
+      "content": "custom/0c338e7e-dd2e-42ab-8acb-d72412b1014e_generated.png"
+    },
+    {
+      "id": "ea7b9de4-0e5e-48cf-ae79-87565f744672",
+      "word": "ചുവപ്പ്",
+      "type": "Colors",
+      "is_emoji": false,
+      "content": "custom/ea7b9de4-0e5e-48cf-ae79-87565f744672_generated.png"
+    },
+    {
+      "id": "0cc3e928-ce85-4aca-8973-f5ca229bbc0c",
+      "word": "റോസാപ്പൂവ്",
+      "type": "Flowers",
+      "is_emoji": false,
+      "content": "custom/0cc3e928-ce85-4aca-8973-f5ca229bbc0c_generated.png"
+    },
+    {
+      "id": "98bf1544-4a94-42bc-906a-fec7032b05f0",
+      "word": "കണ്ണ്",
+      "type": "Human Body Parts",
+      "is_emoji": false,
+      "content": "custom/98bf1544-4a94-42bc-906a-fec7032b05f0_generated.png"
+    },
+    {
+      "id": "37c4e74e-bd6d-471c-8b5d-e8471da755e2",
+      "word": "നായ്",
+      "type": "Animals",
+      "is_emoji": false,
+      "content": "custom/37c4e74e-bd6d-471c-8b5d-e8471da755e2_generated.png"
+    },
+    {
+      "id": "b05d1e9e-0981-44a4-8241-48bbf3dfdb19",
+      "word": "ആപ്പിൾ",
+      "type": "Fruits",
+      "is_emoji": false,
+      "content": "custom/b05d1e9e-0981-44a4-8241-48bbf3dfdb19_generated.png"
+    },
+    {
+      "id": "160443a0-fa5e-4a16-bfdf-415152003dc4",
+      "word": "Car",
+      "type": "Vehicles",
+      "is_emoji": false,
+      "content": "custom/160443a0-fa5e-4a16-bfdf-415152003dc4_generated.png"
+    },
+    {
+      "id": "3c4cb760-855a-43d9-ae64-79de751be281",
+      "word": "Red",
+      "type": "Colors",
+      "is_emoji": false,
+      "content": "custom/3c4cb760-855a-43d9-ae64-79de751be281_generated.png"
+    },
+    {
+      "id": "248ad9e8-20d6-41b6-a4af-8c6f22f9667f",
+      "word": "Rose",
+      "type": "Flowers",
+      "is_emoji": false,
+      "content": "custom/248ad9e8-20d6-41b6-a4af-8c6f22f9667f_generated.png"
+    },
+    {
+      "id": "9d54244e-f2f4-41cb-929a-4e9b64cc95bf",
+      "word": "Eye",
+      "type": "Human Body Parts",
+      "is_emoji": false,
+      "content": "custom/9d54244e-f2f4-41cb-929a-4e9b64cc95bf_generated.png"
+    },
+    {
+      "id": "bb1f61e7-28bd-4844-8246-308b1b184f7b",
+      "word": "Dog",
+      "type": "Animals",
+      "is_emoji": false,
+      "content": "custom/bb1f61e7-28bd-4844-8246-308b1b184f7b_generated.png"
+    },
+    {
+      "id": "dfcebc65-e5d2-4dc2-b655-c9651964c49b",
+      "word": "Apple",
+      "type": "Fruits",
+      "is_emoji": false,
+      "content": "custom/dfcebc65-e5d2-4dc2-b655-c9651964c49b_generated.png"
+    }
+  ],
+  "sentences": [
+    {
+      "id": "35466be6-69f4-4ce4-abd2-f207095f546a",
+      "text": "എനിക്ക് വെള്ളം വേണം"
+    },
+    {
+      "id": "3be461ab-34fa-4543-8b27-5f24fd03923b",
+      "text": "എനിക്ക് ഭക്ഷണം വേണം"
+    }
+  ],
+  "categories": [
+    {
+      "id": "4503a6ba-3277-419b-948e-8dc07f8cdad9",
+      "name": "Vehicles"
+    },
+    {
+      "id": "1394c592-47c2-4eb6-acd2-48175c47a188",
+      "name": "Colors"
+    },
+    {
+      "id": "6355430b-2963-4d53-8556-bca2f16736cf",
+      "name": "Flowers"
+    },
+    {
+      "id": "c48ff8ff-a31e-403a-9862-07b57696a917",
+      "name": "Human Body Parts"
+    },
+    {
+      "id": "21a49a10-3bae-4dd9-a2dc-b8a027893a7e",
+      "name": "Animals"
+    },
+    {
+      "id": "5c3d3d88-0340-4ae2-9e81-f706a1f4ac53",
+      "name": "Fruits"
+    },
+    {
+      "id": "5cfa14c8-3c3f-4c76-a7b1-b3663202a88b",
+      "name": "Healthy Veggies"
+    }
+  ]
+}

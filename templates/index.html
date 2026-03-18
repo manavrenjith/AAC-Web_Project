@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+
+<meta charset="UTF-8">
+<title>എ.എ.സി ആശയവിനിമയ ഉപകരണം</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>എ.എ.സി ആശയവിനിമയ ഉപകരണം</h1>
+
+<button onclick="toggleDarkMode()">Dark Mode</button>
+
+</header>
+
+
+<!-- CATEGORY BUTTONS -->
+
+<div class="categories">
+
+<button onclick="filterCategory('all')">എല്ലാം</button>
+<button onclick="filterCategory('food')">ഭക്ഷണം</button>
+<button onclick="filterCategory('emotion')">ഭാവങ്ങൾ</button>
+<button onclick="filterCategory('help')">സഹായം</button>
+<button onclick="filterCategory('school')">സ്കൂൾ</button>
+
+</div>
+
+
+<!-- GRID -->
+
+<div id="grid" class="grid"></div>
+
+
+<!-- ADD NEW COMMUNICATION -->
+
+<div class="add-section">
+
+<h2>പുതിയ ആശയവിനിമയം ചേർക്കുക</h2>
+
+<input type="file" id="imageInput">
+
+<input type="text" id="sentenceInput" placeholder="വാക്യം എഴുതുക">
+
+<select id="categoryInput">
+
+<option value="food">ഭക്ഷണം</option>
+<option value="emotion">ഭാവങ്ങൾ</option>
+<option value="help">സഹായം</option>
+<option value="school">സ്കൂൾ</option>
+
+</select>
+
+<button onclick="addItem()">ചേർക്കുക</button>
+
+<button onclick="clearAll()">Reset</button>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

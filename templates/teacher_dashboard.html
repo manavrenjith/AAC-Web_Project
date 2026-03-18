@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard | AAC Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="dashboard-body admin-bg">
+
+    <header class="dashboard-header admin-header">
+        <div class="header-content">
+            <div class="user-greeting">
+                <span class="avatar">👩‍🏫</span>
+                <h2>Management Portal - {{ name }}</h2>
+            </div>
+            <!-- 8. Add a logout button. -->
+            <a href="/logout" class="btn btn-outline btn-logout">Logout</a>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <div class="admin-panel">
+            <div class="panel-header">
+                <h3>Manage Student Vocabulary</h3>
+                <button class="btn btn-primary">+ Add New Word</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Emoji/Image</th>
+                            <th>Word Name</th>
+                            <th>Category</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for icon in icons %}
+                        <tr>
+                            <td class="td-icon"><span class="table-emoji">{{ icon.emoji }}</span></td>
+                            <td class="td-word"><strong>{{ icon.word }}</strong></td>
+                            <td><span class="badge badge-{{ icon.type }}">{{ icon.type|capitalize }}</span></td>
+                            <td class="td-actions">
+                                <button class="btn-icon edit" title="Edit">✏️</button>
+                                <button class="btn-icon delete" title="Delete">🗑️</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="admin-footer">
+                <p class="note">* Note: Dictionary is currently hardcoded in app.py for this demo. Forms do not
+                    permanently save to a database yet.</p>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAC System | Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .login-split-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .login-split-container {
+                flex-direction: row;
+                align-items: stretch;
+            }
+        }
+
+        .login-card {
+            flex: 1;
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid transparent;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-card {
+            border-color: var(--primary);
+            background: linear-gradient(to bottom, #ffffff, #f0fdf4);
+        }
+        
+        .caregiver-card {
+            border-color: var(--secondary);
+            background: linear-gradient(to bottom, #ffffff, #fdf4ff);
+        }
+
+        /* Large icon header for cards */
+        .card-icon {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            text-align: center;
+            font-family: 'Comic Neue', cursive;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-card .card-title { color: var(--primary); }
+        .caregiver-card .card-title { color: var(--secondary); }
+
+        .card-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .login-hints {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 2px dashed #e2e8f0;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+        
+        .role-btn {
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.2rem;
+            border-radius: 16px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body class="login-body" style="background: linear-gradient(135deg, #e0f2fe 0%, #ede9fe 100%); min-height: 100vh; display: flex; flex-direction: column;">
+
+    <div style="text-align: center; margin-top: 3rem; margin-bottom: 1rem;">
+        <div style="font-size: 4rem; margin-bottom: 1rem; animation: bounce 2s infinite;">🌟</div>
+        <h1 style="font-family: 'Comic Neue', cursive; font-size: 3rem; color: #334155; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">AAC App</h1>
+        <p style="color: #64748b; font-size: 1.2rem;">Choose your portal to login!</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-messages" style="max-width: 600px; margin: 0 auto; width: 100%; padding: 0 1rem;">
+        {% for category, message in messages %}
+        <div class="flash-alert flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="login-split-container">
+        
+        <!-- User (Child) Login Card -->
+        <div class="login-card user-card">
+            <div class="card-icon">🧒</div>
+            <h2 class="card-title">User Login</h2>
+
+            <form action="/" method="POST" class="login-form">
+                <input type="hidden" name="login_type" value="user">
+                
+                <div class="form-group">
+                    <label for="user_username" style="color: var(--primary);">👤 Username:</label>
+                    <input type="text" id="user_username" name="username" class="form-control" placeholder="Enter username..." required style="border-width: 2px; border-color: #bbf7d0;">
+                </div>
+
+                <div class="form-group">
+                    <label for="user_password" style="color: var(--primary);">🔑 Password:</label>
+                    <input type="password" id="user_password" name="password" class="form-control" placeholder="Enter password..." required style="border-width: 2px; border-color: #bbf7d0;">
+                </div>
+
+                <button type="submit" class="btn btn-primary role-btn">Let's Go! 🚀</button>
+            </form>
+
+            <div class="login-hints">
+                <p>Child Demo: <strong>child1 / 123</strong></p>
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                    <a href="{{ url_for('register') }}" style="color: var(--primary); font-weight: bold; text-decoration: none;">✨ Create new user account</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Caregiver (Admin) Login Card -->
+        <div class="login-card caregiver-card">
+            <div class="card-icon">👩‍🏫</div>
+            <h2 class="card-title">Caregiver Login</h2>
+            <p class="card-subtitle">Manage content & settings</p>
+
+            <form action="/" method="POST" class="login-form">
+                <input type="hidden" name="login_type" value="caregiver">
+                
+                <div class="form-group">
+                    <label for="caregiver_username" style="color: var(--secondary);">📧 Username:</label>
+                    <input type="text" id="caregiver_username" name="username" class="form-control" placeholder="Enter username..." required style="border-width: 2px; border-color: #fbcfe8;">
+                </div>
+
+                <div class="form-group">
+                    <label for="caregiver_password" style="color: var(--secondary);">🔒 Password:</label>
+                    <input type="password" id="caregiver_password" name="password" class="form-control" placeholder="Enter password..." required style="border-width: 2px; border-color: #fbcfe8;">
+                </div>
+
+                <button type="submit" class="btn btn-secondary role-btn" style="background: var(--secondary);">Login</button>
+            </form>
+
+            <div class="login-hints">
+                <p>Caregiver Demo: <strong>admin1 / admin</strong></p>
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                    <a href="{{ url_for('register') }}" style="color: var(--secondary); font-weight: bold; text-decoration: none;">✨ Create new caregiver account</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

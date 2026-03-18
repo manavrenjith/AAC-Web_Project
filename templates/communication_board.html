@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}AAC Board | Communication{% endblock %}
+
+{% block body_class %}dashboard-body home-theme{% endblock %}
+
+{% block content %}
+<main class="aac-main">
+
+    <!-- Header Controls -->
+    <section class="board-header-section"
+        style="padding: 2rem; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed #cbd5e1; margin-bottom: 2rem;">
+        <div>
+            <a href="{{ url_for('home') }}" class="btn btn-secondary" style="margin-right: 1rem;">⬅️ Back to Home</a>
+            <h1
+                style="display: inline-block; font-family: 'Comic Neue', cursive; color: var(--text-main); margin: 0; font-size: 2rem; vertical-align: middle;">
+                Communication Board</h1>
+        </div>
+        <div class="category-buttons" style="margin-bottom: 0;">
+            <button class="btn btn-category all hover-bounce" onclick="filterCategory('all')">🌈 All Categories</button>
+            {% for category in categories %}
+            <button class="btn btn-category hover-bounce" onclick="filterCategory('{{ category.name }}')">📁 {{
+                category.name }}</button>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Communication Board (Preview Grid) -->
+    <section class="symbol-grid-section" id="preview-grid">
+        <div class="grid" id="word-grid">
+
+            <!-- Emotions -->
+            <div class="word-card emotions hover-bounce" data-word="സന്തോഷം" data-category="emotions">
+                <div class="card-image-container"><span class="card-emoji">😊</span></div>
+                <div class="card-text">സന്തോഷം</div>
+            </div>
+            <div class="word-card emotions hover-bounce" data-word="സങ്കടം" data-category="emotions">
+                <div class="card-image-container"><span class="card-emoji">😢</span></div>
+                <div class="card-text">സങ്കടം</div>
+            </div>
+            <div class="word-card emotions hover-bounce" data-word="ദേഷ്യം" data-category="emotions">
+                <div class="card-image-container"><span class="card-emoji">😠</span></div>
+                <div class="card-text">ദേഷ്യം</div>
+            </div>
+            <div class="word-card emotions hover-bounce" data-word="പേടി" data-category="emotions">
+                <div class="card-image-container"><span class="card-emoji">😨</span></div>
+                <div class="card-text">പേടി</div>
+            </div>
+            <div class="word-card emotions hover-bounce" data-word="ആവേശം" data-category="emotions">
+                <div class="card-image-container"><span class="card-emoji">🤩</span></div>
+                <div class="card-text">ആവേശം</div>
+            </div>
+
+            <!-- Daily Needs -->
+            <div class="word-card daily_needs hover-bounce" data-word="വെള്ളം" data-category="daily_needs">
+                <div class="card-image-container"><span class="card-emoji">💧</span></div>
+                <div class="card-text">വെള്ളം</div>
+            </div>
+            <div class="word-card daily_needs hover-bounce" data-word="ഭക്ഷണം" data-category="daily_needs">
+                <div class="card-image-container"><span class="card-emoji">🥪</span></div>
+                <div class="card-text">ഭക്ഷണം</div>
+            </div>
+            <div class="word-card daily_needs hover-bounce" data-word="ടോയ്‌ലറ്റ്" data-category="daily_needs">
+                <div class="card-image-container"><span class="card-emoji">🚽</span></div>
+                <div class="card-text">ടോയ്‌ലറ്റ്</div>
+            </div>
+            <div class="word-card daily_needs hover-bounce" data-word="സഹായം" data-category="daily_needs">
+                <div class="card-image-container"><span class="card-emoji">🆘</span></div>
+                <div class="card-text">സഹായം</div>
+            </div>
+            <div class="word-card daily_needs hover-bounce" data-word="ഉറക്കം" data-category="daily_needs">
+                <div class="card-image-container"><span class="card-emoji">😴</span></div>
+                <div class="card-text">ഉറക്കം</div>
+            </div>
+
+            <!-- Dynamically loaded icons from Database -->
+            {% for icon in icons %}
+            <div class="word-card {{ icon.type }} hover-bounce" data-word="{{ icon.word }}"
+                data-category="{{ icon.type }}">
+                <div class="card-image-container">
+                    {% if icon.is_emoji %}
+                    <span class="card-emoji">{{ icon.content }}</span>
+                    {% else %}
+                    <img src="{{ url_for('static', filename='images/' + icon.content) }}" alt="{{ icon.word }}"
+                        class="card-uploaded-img">
+                    {% endif %}
+                </div>
+                <div class="card-text">{{ icon.word }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+</main>
+
+<script>
+    // Use browser Speech API explicitly for the new page layout
+    document.addEventListener('DOMContentLoaded', () => {
+        const wordCards = document.querySelectorAll('.word-card');
+
+        // Re-apply speech events locally if script.js requires specific DOM states
+        wordCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const wordToSpeak = card.getAttribute('data-word');
+                if (wordToSpeak) {
+                    try {
+                        const synth = window.speechSynthesis;
+                        const utterance = new SpeechSynthesisUtterance(wordToSpeak);
+                        utterance.lang = 'ml-IN'; // Ensure Malayalam or English fallback plays
+                        synth.speak(utterance);
+                    } catch (e) {
+                        console.error("Speech Error:", e);
+                    }
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
