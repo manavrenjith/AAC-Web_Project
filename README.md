@@ -14,6 +14,15 @@ The app includes role-based flows (user/caregiver) and supports:
 - Caregiver content management (icons, categories, sentences)
 - Image-to-text support using BLIP + translation to Malayalam + generated audio
 
+## Academic Context
+This project was developed as part of a college course project.
+Its primary purpose is learning, experimentation, and academic demonstration.
+It is not intended to be a production-ready clinical AAC system.
+
+## Disclaimer
+This repository may contain prototype features and is provided for educational use.
+Do not use it as a substitute for professional medical or therapeutic AAC tools.
+
 ## Tech Stack
 - Backend: Python, Flask
 - Frontend: HTML (Jinja templates), CSS, JavaScript
