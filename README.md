@@ -14,6 +14,9 @@ The app includes role-based flows (user/caregiver) and supports:
 - Caregiver content management (icons, categories, sentences)
 - Image-to-text support using BLIP + translation to Malayalam + generated audio
 
+## Language Support
+This project currently supports only Malayalam and English.
+
 ## Academic Context
 This project was developed as part of a college course project.
 Its primary purpose is learning, experimentation, and academic demonstration.
