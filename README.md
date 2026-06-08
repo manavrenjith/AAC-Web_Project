@@ -53,7 +53,7 @@ AAC-Web_Project/
 
 ### 1. Clone the repository
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/manavrenjith/AAC-Web_Project
 cd AAC-Web_Project
 ```
 
@@ -93,12 +93,16 @@ The app runs at:
 ### UI Preview
 
 
-```md
-![Login Page](docs/screenshots/login.png)
-![Communication Board](docs/screenshots/communication-board.png)
-![Caregiver Dashboard](docs/screenshots/caregiver-dashboard.png)
-```
+## UI Preview
 
+### Login Page
+![Login Page](docs/screenshots/login.png)
+
+### Communication Board
+![Communication Board](docs/screenshots/communication-board.png)
+
+### Caregiver Dashboard
+![Caregiver Dashboard](docs/screenshots/caregiver-dashboard.png)
 ## Demo Credentials
 
 
