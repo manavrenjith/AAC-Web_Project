@@ -91,12 +91,7 @@ The app runs at:
 ![AAC Logo](static/images/aac_logo.svg)
 
 ### UI Preview
-Add screenshots after taking them from your running app, for example:
-- `docs/screenshots/login.png`
-- `docs/screenshots/communication-board.png`
-- `docs/screenshots/caregiver-dashboard.png`
 
-Example markdown to use:
 
 ```md
 ![Login Page](docs/screenshots/login.png)
@@ -105,16 +100,16 @@ Example markdown to use:
 ```
 
 ## Demo Credentials
-Use this section if you want visitors to test quickly.
+
 
 ```text
 Caregiver
-Username: your_caregiver_username
-Password: your_caregiver_password
+Username: admin1
+Password: admin
 
 User
-Username: your_user_username
-Password: your_user_password
+Username: child1
+Password: 123
 ```
 
 ## Notes
